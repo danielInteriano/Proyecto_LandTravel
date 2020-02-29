@@ -9,6 +9,7 @@ use React\EventLoop\LoopInterface;
 use React\Promise\PromiseInterface;
 use React\MySQL\ConnectionInterface;
 use App\Nucleo\Interfaces\ModelInterface;
+use App\Rutas\Exceptions\RutaNoExiste;
 use App\Usuarios\Excepciones\UsuarioNoExiste;
 
 final class ModelRuta implements ModelInterface
@@ -85,14 +86,14 @@ final class ModelRuta implements ModelInterface
 
      function exists(string $id)
     {
-        return $this->conexion->query("SELECT * FROM usuarios where idusuario = ?", [$id])
+        return $this->conexion->query("SELECT * FROM ruta where idruta = ?", [$id])
             ->then(
                 function (QueryResult $resultado)
                 {
                     if(empty($resultado->resultRows))
                     {
                         // Reject es básicamente un throw, permite hacer error handling.
-                        return reject(new UsuarioNoExiste());
+                        return reject(new RutaNoExiste());
                     }
 
                     return $resultado;

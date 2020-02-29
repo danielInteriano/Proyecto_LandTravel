@@ -54,6 +54,6 @@ final class RespuestaJson extends Response
 
     public static function BAD_REQUEST($data): self
     {
-        return new self(400, ['errors' => $data]);
+        return new self(400, $data);
     }
 }

@@ -10,7 +10,7 @@ use React\Promise\PromiseInterface;
 use React\MySQL\ConnectionInterface;
 
 use App\Nucleo\Interfaces\ModelInterface;
-use App\Usuarios\Excepciones\UsuarioNoExiste;
+use App\Usuarios\Exceptions\UsuarioNoExiste;
 
 final class ModelUsuario implements ModelInterface
 {
@@ -30,41 +30,21 @@ final class ModelUsuario implements ModelInterface
                 function(QueryResult $resultado)
                 {   
                     $usuarios = [];
-                    foreach($resultado->resultRows as $linea)
-                    {
-                        $idusuario = $linea['idusuario'];
-                        $nombres = $linea['nombres'];
-                        $apellidos = $linea['apellidos'];
-                        $usuario = $linea['usuario'];
-                        $correo = $linea['correo'];
-                        $pais = $linea['pais'];
-                        $f_registro = $linea['f_registro'];
-                        array_push($usuarios, new Usuario($idusuario, $nombres, $apellidos, $usuario, 
-                                                            $correo, $pais, $f_registro));
+                    if(empty($resultado->resultRows)){
+                        return $usuarios;
+                    }else{
+                        foreach($resultado->resultRows as $linea){
+                            array_push($usuarios, Usuario::Usuario($linea));
+                        }
+                        return $usuarios;
                     }
-                    return $usuarios;
                 }
             );
     }
 
     public function getOne(string $id) : PromiseInterface
     {
-        return $this->exists($id)
-            ->then(
-                function(QueryResult $resultado)
-                {
-                    $linea = $resultado->resultRows[0];
-                    $idusuario = $linea['idusuario'];
-                    $nombres = $linea['nombres'];
-                    $apellidos = $linea['apellidos'];
-                    $usuario = $linea['usuario'];
-                    $correo = $linea['correo'];
-                    $pais = $linea['pais'];
-                    $f_registro = $linea['f_registro'];
-                    return new Usuario($idusuario, $nombres, $apellidos, $usuario, 
-                                        $correo, $pais, $f_registro);
-                }
-            );
+        return $this->exists($id);
     }
     
     public function create(Array $data) : PromiseInterface
@@ -81,12 +61,16 @@ final class ModelUsuario implements ModelInterface
     {
         return $this->exists($id)
             ->then(
-                function (QueryResult $resultado) use ($id)
+                function (Usuario $usuario) use ($id)
                 {
                     $this->conexion->query('UPDATE usuario SET HABILITADO=0 WHERE idusuario = ?', [$id]);
                     return;
                 }
             );
+    }
+
+    public function getAllById(string $id)
+    {
     }
 
     /* 
@@ -104,8 +88,7 @@ final class ModelUsuario implements ModelInterface
                         // Reject es básicamente un throw, permite hacer error handling.
                         return reject(new UsuarioNoExiste());
                     }
-
-                    return $resultado;
+                    return Usuario::Usuario($resultado->resultRows[0]);
                 }
             );
     }
@@ -114,7 +97,7 @@ final class ModelUsuario implements ModelInterface
     {
         return $this->exists($id)
             ->then(
-                function(QueryResult $resultado) use($id,$data)
+                function(Usuario $usuario) use($id,$data)
                 {
                     return $this->update($id, $data);
                 }
@@ -126,7 +109,16 @@ final class ModelUsuario implements ModelInterface
             );
     }
 
-    public function getAllById(string $id)
+    public function existsCorreo(string $correo)
     {
+        return $this->conexion->query('SELECT * from usuarios where correo = ?', [$correo])
+            ->then(
+                function(QueryResult $resultado){
+                    if(empty($resultado->resultRows)){
+                        return reject(new UsuarioNoExiste());
+                    }
+                    return Usuario::Usuario($resultado->resultRows[0]);
+                }
+            );
     }
 }

@@ -22,7 +22,6 @@ interface ModelInterface
      * Esta función debe poder retornar un registro de la base de datos,
      * la forma que se filtran o se ejecuta la query depende totalmente del
      * programador.
-     * @param string Parametro 
      * @return PromiseInterface
     */
     public function getOne(string $param) : PromiseInterface;

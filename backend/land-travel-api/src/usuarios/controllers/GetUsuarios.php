@@ -2,10 +2,9 @@
 
 namespace App\Usuarios\Controllers;
 
-use App\Nucleo\Template\ControladorTemplate;
-use App\Respuestas\RespuestaJson;
-use App\Usuarios\Model\ModelUsuario;
 use App\Usuarios\Usuario;
+use App\Respuestas\RespuestaJson;
+use App\Nucleo\Template\ControladorTemplate;
 use Psr\Http\Message\ServerRequestInterface;
 
 final class GetUsuarios extends ControladorTemplate
@@ -16,19 +15,11 @@ final class GetUsuarios extends ControladorTemplate
             ->then(
                 function(Array $usuarios)
                 {
-                    $data = [];
-                    foreach($usuarios as $usuario)
-                    {
-                        array_push($data, $usuario->toArray());
-                    }
+                    $data = array_map(function(Usuario $usuario){
+                        return $usuario->toArray();
+                    },$usuarios);
                     return RespuestaJson::OK(['usuarios' => $data]);
                 }
             );
-    }
-
-    public static function factory($conexion) : self
-    {
-        $modelo = new ModelUsuario($conexion);
-        return new self($modelo);
     }
 }

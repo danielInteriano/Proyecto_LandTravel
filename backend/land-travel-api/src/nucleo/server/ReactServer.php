@@ -2,6 +2,11 @@
 
 namespace App\Nucleo\Server;
 
+use App\Auth\Controllers\GenerarCodigoRespaldo;
+use App\Auth\Controllers\IniciarSesion;
+use App\Auth\Controllers\Registrarse;
+use App\Auth\Controllers\RestablecerContraseña;
+use App\Auth\Model\ModelAuth;
 use Exception;
 use React\Http\Server;
 use React\EventLoop\Factory;
@@ -15,6 +20,7 @@ use React\Socket\Server as ServerSocket;
 use App\Rutas\Controller\GetRutasPorTour;
 use App\Usuarios\Controllers\GetUsuarios;
 use App\Nucleo\Middleware\RevisarConexion;
+use App\Tours\Controllers\GetOneTour;
 use App\Tours\Controllers\GetTours;
 use App\Usuarios\Controllers\DeleteUsuario;
 use App\Usuarios\Controllers\GetOneUsuario;
@@ -28,7 +34,7 @@ final class ReactServer
     private $rutas;
     private $ciclo;
 
-    function __construct(int $puerto, string $uri)
+    function __construct(int $puerto, string $uri, string $jwt)
     {
         $this->puerto = $puerto;
         $this->ciclo = Factory::create();
@@ -47,6 +53,7 @@ final class ReactServer
         $modelo_usuarios = new ModelUsuario($this->conexion, $this->ciclo);
         $modelo_tours = new ModelTours($this->conexion, $this->ciclo);
         $modelo_rutas = new ModelRuta($this->conexion, $this->ciclo);
+        $modelo_auth = new ModelAuth($this->conexion, $this->ciclo);
 
         /* 
             Creacion del grupo de las rutas, aqui se meteran las rutas de los
@@ -59,12 +66,23 @@ final class ReactServer
             $this->rutas->delete('/{id:\d+}', new DeleteUsuario($modelo_usuarios));
         });
 
+        /*
+            Rutas para conseguir información de los tours
+         */
         $this->rutas->addGroup('/tours', function () use ($modelo_tours){
             $this->rutas->get('', new GetTours($modelo_tours));
+            $this->rutas->get('/{id:\d+}', new GetOneTour($modelo_tours));
         });
 
         $this->rutas->addGroup('/rutas', function () use ($modelo_rutas){
             $this->rutas->get('/tour/{id:\d+}', new GetRutasPorTour($modelo_rutas));
+        });
+
+        $this->rutas->addGroup('/auth', function () use ($modelo_auth, $jwt){
+            $this->rutas->post('/registrarse', new Registrarse($modelo_auth));
+            $this->rutas->post('/login', new IniciarSesion($modelo_auth, $jwt));
+            $this->rutas->put('/codigoRespaldo', new GenerarCodigoRespaldo($modelo_auth));
+            $this->rutas->put('/restablecer', new RestablecerContraseña($modelo_auth));
         });
     }
 

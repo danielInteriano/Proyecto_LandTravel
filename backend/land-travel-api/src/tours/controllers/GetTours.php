@@ -2,10 +2,9 @@
 
 namespace App\Tours\Controllers;
 
-use App\Nucleo\Template\ControladorTemplate;
+use App\Tours\Tour;
 use App\Respuestas\RespuestaJson;
-use App\Rutas\Model\ModelRuta;
-use App\Tours\Model\ModelTours;
+use App\Nucleo\Template\ControladorTemplate;
 use Psr\Http\Message\ServerRequestInterface;
 
 final class GetTours extends ControladorTemplate
@@ -16,19 +15,11 @@ final class GetTours extends ControladorTemplate
             ->then(
                 function(Array $tours)
                 {
-                    $data = [];
-                    foreach($tours as $tour)
-                    {
-                        array_push($data, $tour->toArray());
-                    }
+                    $data = array_map(function(Tour $tour){
+                        return $tour->toArray();
+                    },$tours);
                     return RespuestaJson::OK(['tours' => $data]);
                 }
             );
-    }
-
-    public static function factory($conexion) : self
-    {
-        $modelo = new ModelTours($conexion);
-        return new self($modelo);
     }
 }

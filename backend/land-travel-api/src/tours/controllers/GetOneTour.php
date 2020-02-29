@@ -1,31 +1,30 @@
 <?php
 
-namespace App\Usuarios\Controllers;
+namespace App\Tours\Controllers;
 
 use Exception;
-use App\Usuarios\Usuario;
+use App\Tours\Tour;
 use App\Respuestas\RespuestaJson;
 use App\Nucleo\Template\ControladorTemplate;
+use App\Tours\Exceptions\TourNoExiste;
 use Psr\Http\Message\ServerRequestInterface;
-use App\Usuarios\Exceptions\UsuarioNoExiste;
 
-final class GetOneUsuario extends ControladorTemplate
+final class GetOneTour extends ControladorTemplate
 {
-    public function __invoke(ServerRequestInterface $peticion, $id)
+    public function __invoke(ServerRequestInterface $peticion, string $id)
     {
         return $this->modelo->getOne($id)
             // El codigo se ejecutó satisfactoriamente
             ->then(
-                function(Usuario $usuario)
+                function(Tour $tour)
                 {
-                    return RespuestaJson::OK(['usuarios' => $usuario->toArray()]);
+                    return RespuestaJson::OK(['tours' => $tour->toArray()]);
                 }
             )
             // Se ejecutará cuando se haga un reject
             ->then(null,
-                function(UsuarioNoExiste $excepcion)
+                function(TourNoExiste $excepcion)
                 {
-                    
                     return RespuestaJson::INTERNAL_ERROR(['errores' => 'No se encontró al usuario']);
                 }
             )
@@ -36,11 +35,4 @@ final class GetOneUsuario extends ControladorTemplate
                 }
             );
     }
-/*
-    public static function factory($conexion) : self
-    {
-        $modelo = new ModelUsuario($conexion);
-        return new self($modelo);
-    }
-*/
 }
