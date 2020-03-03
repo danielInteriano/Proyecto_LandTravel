@@ -1,0 +1,166 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+div#body{
+    width: 98.8vw;
+    height: 189vh;
+    background-image: url("../img/bg5.jpg");
+}
+div#izquierdo{
+    width: 560px;
+    margin-right: 20px;
+    margin-left: 30px;
+    margin-top: 20px;
+    background-color: rgba(0, 0, 0, 0.767);
+    text-align: left;
+    float: left;
+    transition:0.5s;
+}
+div#centro{
+    width: 420px;
+    margin-top: 20px;
+    margin-right: 20px;
+    background-color: rgba(0, 0, 0, 0.767);
+    float: left;
+}
+div#derecho{
+ 
+    margin-top: 20px;   
+    float: left;
+}
+.img_avion {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    border-radius: 50%;
+    position: absolute;
+    float: left;
+    top: 5px;
+    left: calc(5% - 5px);
+  }
+div#telefono{
+    width: 250px;
+    height: 300px;
+    background-color: rgba(0, 0, 0, 0.767);
+    text-align: center;
+    }
+div#email{
+    padding-top:15px;
+    width: 250px;
+    height: 250px;
+    background-color: rgba(0, 0, 0, 0.767);
+    text-align: center;
+}
+div#ubicacion{
+    padding-top:15px;
+    width: 250px;
+    height: 340px;
+    background-color: rgba(0, 0, 0, 0.767);
+    text-align: center;
+}
+h1{
+    font-family: 'Cambria', serif;
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+    margin-left: 20px;
+    font-style: italic;
+}
+h2{
+    font-family: 'Cambria', serif;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
+h3{
+    font-family: 'cambria', serif;
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
+p{
+    font-family: 'Calibri', serif;
+    font-size: 20px;
+    font-weight: normal;
+    color: rgb(238, 238, 238);
+    text-align: justify;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+a{
+    font-size: 17px;
+    font-weight: bold;
+    text-shadow: black;
+    color: rgb(238, 238, 238) !important;
+}
+
+p#tel{
+    font-family: cambria;
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
+    float: left;
+}
+p#email{
+    font-family: cambria;
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
+    float: left;
+}
+p#ubicacion{
+    font-family: cambria;
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
+    float: left;
+}
+img#img_tel{
+    width: 40px;
+    height: 40px;
+    float: left;
+    margin-right: 5px;
+}
+img#img_email{
+    width: 40px;
+    height: 40px;
+    float: left;
+    margin-right: 5px;
+}
+img#img_ubicacion{
+    width: 40px;
+    height: 40px;
+    float: left;
+    margin-right: 5px;
+}
+img#img_logo{
+    width: 90px;
+    height: 90px;
+    float: left;
+    margin-right: 5px;
+}
+p#logo{
+    font-family: "Cambria";
+    font-size: 40px;
+    font-weight: bold;
+}
+a{
+    font-family: 'Cambria', serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
+a#fax{
+    text-align: left;
+}
+a#pbx{
+    text-align: left;
+}
+
+.orangetittle{
+    color:rgb(201, 52, 6);
+}
