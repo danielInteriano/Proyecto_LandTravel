@@ -8,14 +8,14 @@ $('#iniciar-sesion').click(function(){
 
 	var parametros = {
 		'usuario': $("#login-usuario").val(),
-		'contrasenia': $("#login-contraseña").val(),
+		'contraseña': $("#login-contraseña").val(),
 	};
 	console.log(parametros)
 	$.ajax({
 		type:"POST",
 		data: parametros,
 		datatype:'json',
-		url:"../php/login.php",
+		url:"34.94.254.221/auth/login",
 		success:function(resultado){
 			console.log(resultado);
 			/*if(resultado==true){
