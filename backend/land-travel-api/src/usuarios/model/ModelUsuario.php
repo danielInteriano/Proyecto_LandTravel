@@ -30,14 +30,10 @@ final class ModelUsuario implements ModelInterface
                 function(QueryResult $resultado)
                 {   
                     $usuarios = [];
-                    if(empty($resultado->resultRows)){
-                        return $usuarios;
-                    }else{
-                        foreach($resultado->resultRows as $linea){
-                            array_push($usuarios, Usuario::Usuario($linea));
-                        }
-                        return $usuarios;
+                    foreach($resultado->resultRows as $linea){
+                        array_push($usuarios, Usuario::Usuario($linea));
                     }
+                    return $usuarios;
                 }
             );
     }

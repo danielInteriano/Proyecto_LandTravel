@@ -1,21 +1,19 @@
 <?php
 
-namespace App\Rutas\Model;
+namespace App\Lugares\Model;
 
-use App\Rutas\Ruta;
+use App\Lugares\Lugar;
 use React\MySQL\QueryResult;
 use function React\Promise\reject;
-use function React\Promise\resolve;
 
 use React\EventLoop\LoopInterface;
+use function React\Promise\resolve;
 use React\Promise\PromiseInterface;
 use React\MySQL\ConnectionInterface;
+use App\Lugares\Exceptions\LugarNoExiste;
 use App\Nucleo\Interfaces\ModelInterface;
-use App\Rutas\Exceptions\ErrorCreacionRutas;
-use App\Rutas\Exceptions\RutaNoExiste;
-use App\Usuarios\Excepciones\UsuarioNoExiste;
 
-final class ModelRuta implements ModelInterface
+final class ModelLugares implements ModelInterface
 {
     public $conexion;
     protected $loop;
@@ -28,17 +26,17 @@ final class ModelRuta implements ModelInterface
 
     function getAll() : PromiseInterface
     {
-        return $this->conexion->query('SELECT * FROM rutas')
+        return $this->conexion->query('SELECT * FROM lugares')
             ->then(
                 function(QueryResult $resultado)
                 {   
-                    $rutas = [];
+                    $lugares = [];
                     foreach($resultado->resultRows as $linea)
                     {
-                        array_push($rutas, Ruta::Ruta($linea));
+                        array_push($lugares, Lugar::Lugar($linea));
                     }
 
-                    return $rutas;
+                    return $lugares;
                 }
             );
     }
@@ -49,33 +47,14 @@ final class ModelRuta implements ModelInterface
             ->then(
                 function(QueryResult $resultado)
                 {
-
+                    return Lugar::Lugar($resultado->resultRows[0]);
                 }
             );
     }
     
      function create(Array $data) : PromiseInterface
     {
-        $this->conexion->query('SET @codigo_error = 0;');
-        $this->conexion->query('CALL landtravel.SpNuevaRuta(?, ?, ?, ?, ?, ?, ?, @codigo_error);', 
-        [
-            $data['idtour'],
-            $data['idpaquete'],
-            $data['idtransporte'],
-            $data['c_dias'],
-            $data['c_dias'],
-            $data['precio'],
-            $data['pos']
-        ]);
-        return $this->conexion->query('SELECT @codigo_error as error;')
-            ->then(function(QueryResult $resultado){
-
-                if($resultado->resultRows[0]['error'] !== '0')
-                {
-                    return reject(new ErrorCreacionRutas());
-                }
-                return resolve();
-            });
+        return $this->conexion->query('');
     }
 
      function update(string $id, Array $data) : PromiseInterface
@@ -101,14 +80,14 @@ final class ModelRuta implements ModelInterface
 
      function exists(string $id)
     {
-        return $this->conexion->query("SELECT * FROM rutas where idruta = ?", [$id])
+        return $this->conexion->query("SELECT * FROM lugares where idlugar = ?", [$id])
             ->then(
                 function (QueryResult $resultado)
                 {
                     if(empty($resultado->resultRows))
                     {
                         // Reject es básicamente un throw, permite hacer error handling.
-                        return reject(new RutaNoExiste());
+                        return reject(new LugarNoExiste());
                     }
 
                     return $resultado;
@@ -116,16 +95,16 @@ final class ModelRuta implements ModelInterface
             );
     }
 
-    public function getAllById(string $idtour)
+    public function getAllById(string $idciudad)
     {
-        return $this->conexion->query('SELECT * FROM rutas WHERE idtour = ?', [$idtour])
+        return $this->conexion->query('SELECT * FROM lugares WHERE idciudad = ?', [$idciudad])
                 ->then(
                     function(QueryResult $resultado)
                     {   
                         $rutas = [];
                         foreach($resultado->resultRows as $linea)
                         {
-                            array_push($rutas, Ruta::Ruta($linea));
+                            array_push($rutas, Lugar::Lugar($linea));
                         }
                         return $rutas;
                     }

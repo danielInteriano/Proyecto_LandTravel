@@ -2,29 +2,44 @@
 
 namespace App\Nucleo\Server;
 
-use App\Auth\Controllers\GenerarCodigoRespaldo;
-use App\Auth\Controllers\IniciarSesion;
-use App\Auth\Controllers\Registrarse;
-use App\Auth\Controllers\RestablecerContraseña;
-use App\Auth\Model\ModelAuth;
 use Exception;
 use React\Http\Server;
 use React\EventLoop\Factory;
+use App\Auth\Model\ModelAuth;
+
 use FastRoute\RouteCollector;
 use App\Rutas\Model\ModelRuta;
 use FastRoute\RouteParser\Std;
 use App\Tours\Model\ModelTours;
+use App\Hoteles\Model\ModelHotel;
+use App\Rutas\Controller\GetRutas;
+use App\Ciudades\Model\ModelCiudad;
+use App\Lugares\Model\ModelLugares;
+use App\Tours\Controllers\GetTours;
+use App\Rutas\Controller\CreateRuta;
 use App\Usuarios\Model\ModelUsuario;
+use App\Auth\Controllers\Registrarse;
+use App\Tours\Controllers\DeleteTour;
+use App\Tours\Controllers\GetOneTour;
+use App\Auth\Controllers\IniciarSesion;
+use App\Hoteles\Controllers\GetHoteles;
+use App\Lugares\Controllers\GetLugares;
 use App\Nucleo\Template\RouterTemplate;
+use App\Hoteles\Controllers\GetOneHotel;
+use App\Lugares\Controllers\GetOneLugar;
 use React\Socket\Server as ServerSocket;
+use App\Ciudades\Controllers\GetCiudades;
 use App\Rutas\Controller\GetRutasPorTour;
 use App\Usuarios\Controllers\GetUsuarios;
 use App\Nucleo\Middleware\RevisarConexion;
-use App\Tours\Controllers\GetOneTour;
-use App\Tours\Controllers\GetTours;
+use App\Lugares\Controllers\GetLugaresById;
 use App\Usuarios\Controllers\DeleteUsuario;
 use App\Usuarios\Controllers\GetOneUsuario;
 use FastRoute\DataGenerator\GroupCountBased;
+use App\Auth\Controllers\GenerarCodigoRespaldo;
+use App\Auth\Controllers\RestablecerContraseña;
+use App\Paises\Controllers\GetPais;
+use App\Paises\Model\ModelPais;
 
 final class ReactServer
 {
@@ -54,6 +69,10 @@ final class ReactServer
         $modelo_tours = new ModelTours($this->conexion, $this->ciclo);
         $modelo_rutas = new ModelRuta($this->conexion, $this->ciclo);
         $modelo_auth = new ModelAuth($this->conexion, $this->ciclo);
+        $modelo_pais = new ModelPais($this->conexion, $this->ciclo);
+        $modelo_ciudades = new ModelCiudad($this->conexion, $this->ciclo);
+        $modelo_hoteles = new ModelHotel($this->conexion, $this->ciclo);
+        $modelo_lugares = new ModelLugares($this->conexion, $this->ciclo);
 
         /* 
             Creacion del grupo de las rutas, aqui se meteran las rutas de los
@@ -71,11 +90,34 @@ final class ReactServer
          */
         $this->rutas->addGroup('/tours', function () use ($modelo_tours){
             $this->rutas->get('', new GetTours($modelo_tours));
+            $this->rutas->post('/crear', new CreateRuta($modelo_tours));
             $this->rutas->get('/{id:\d+}', new GetOneTour($modelo_tours));
+            $this->rutas->delete('/{id:\d+}', new DeleteTour($modelo_tours));
         });
 
         $this->rutas->addGroup('/rutas', function () use ($modelo_rutas){
-            $this->rutas->get('/tour/{id:\d+}', new GetRutasPorTour($modelo_rutas));
+            $this->rutas->get('', new GetRutas($modelo_rutas));
+            $this->rutas->get('/tours/{id:\d+}', new GetRutasPorTour($modelo_rutas));
+            $this->rutas->post('/crear', new CreateRuta($modelo_rutas));
+        });
+
+        $this->rutas->addGroup('/pais', function () use ($modelo_pais){
+            $this->rutas->get('', new GetPais($modelo_pais));
+        });
+
+        $this->rutas->addGroup('/ciudades', function () use ($modelo_ciudades){
+            $this->rutas->get('', new GetCiudades($modelo_ciudades));
+        });
+
+        $this->rutas->addGroup('/hoteles', function () use ($modelo_hoteles){
+            $this->rutas->get('', new GetHoteles($modelo_hoteles));
+            $this->rutas->get('/{id:\d+}', new GetOneHotel($modelo_hoteles));
+        });
+
+        $this->rutas->addGroup('/lugares', function () use ($modelo_lugares){
+            $this->rutas->get('', new GetLugares($modelo_lugares));
+            $this->rutas->get('/{id:\d+}', new GetOneLugar($modelo_lugares));
+            $this->rutas->get('/ciudades/{id:\d+}', new GetLugaresById($modelo_lugares));
         });
 
         $this->rutas->addGroup('/auth', function () use ($modelo_auth, $jwt){

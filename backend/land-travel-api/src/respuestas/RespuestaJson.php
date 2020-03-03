@@ -27,6 +27,11 @@ final class RespuestaJson extends Response
         return new self(404, ['message' => 'No se encontro este metodo; revisa la ruta de tu petición']);
     }
 
+    public static function NOT_FOUND_DATA($data): self
+    {
+        return new self(404, $data);
+    }
+
     public static function METHOD_NOT_ALLOWED(): self
     {
         return new self(405, ['message' => 'Este metodo no está permitido']);

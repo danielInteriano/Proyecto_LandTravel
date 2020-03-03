@@ -1,21 +1,20 @@
 <?php
 
-namespace App\Rutas\Model;
+namespace App\Hoteles\Model;
 
-use App\Rutas\Ruta;
+use App\Hoteles\Hotel;
 use React\MySQL\QueryResult;
 use function React\Promise\reject;
-use function React\Promise\resolve;
 
 use React\EventLoop\LoopInterface;
+use function React\Promise\resolve;
 use React\Promise\PromiseInterface;
 use React\MySQL\ConnectionInterface;
-use App\Nucleo\Interfaces\ModelInterface;
-use App\Rutas\Exceptions\ErrorCreacionRutas;
-use App\Rutas\Exceptions\RutaNoExiste;
-use App\Usuarios\Excepciones\UsuarioNoExiste;
 
-final class ModelRuta implements ModelInterface
+use App\Hoteles\Exceptions\HotelNoExiste;
+use App\Nucleo\Interfaces\ModelInterface;
+
+final class ModelHotel implements ModelInterface
 {
     public $conexion;
     protected $loop;
@@ -28,17 +27,17 @@ final class ModelRuta implements ModelInterface
 
     function getAll() : PromiseInterface
     {
-        return $this->conexion->query('SELECT * FROM rutas')
+        return $this->conexion->query('SELECT * FROM hoteles')
             ->then(
                 function(QueryResult $resultado)
                 {   
-                    $rutas = [];
+                    $hoteles = [];
                     foreach($resultado->resultRows as $linea)
                     {
-                        array_push($rutas, Ruta::Ruta($linea));
+                        array_push($hoteles, Hotel::Hotel($linea));
                     }
 
-                    return $rutas;
+                    return $hoteles;
                 }
             );
     }
@@ -49,33 +48,14 @@ final class ModelRuta implements ModelInterface
             ->then(
                 function(QueryResult $resultado)
                 {
-
+                    return Hotel::Hotel($resultado->resultRows[0]);
                 }
             );
     }
     
      function create(Array $data) : PromiseInterface
     {
-        $this->conexion->query('SET @codigo_error = 0;');
-        $this->conexion->query('CALL landtravel.SpNuevaRuta(?, ?, ?, ?, ?, ?, ?, @codigo_error);', 
-        [
-            $data['idtour'],
-            $data['idpaquete'],
-            $data['idtransporte'],
-            $data['c_dias'],
-            $data['c_dias'],
-            $data['precio'],
-            $data['pos']
-        ]);
-        return $this->conexion->query('SELECT @codigo_error as error;')
-            ->then(function(QueryResult $resultado){
-
-                if($resultado->resultRows[0]['error'] !== '0')
-                {
-                    return reject(new ErrorCreacionRutas());
-                }
-                return resolve();
-            });
+        return $this->conexion->query('');
     }
 
      function update(string $id, Array $data) : PromiseInterface
@@ -101,14 +81,14 @@ final class ModelRuta implements ModelInterface
 
      function exists(string $id)
     {
-        return $this->conexion->query("SELECT * FROM rutas where idruta = ?", [$id])
+        return $this->conexion->query("SELECT * FROM hoteles where idhotel = ?", [$id])
             ->then(
                 function (QueryResult $resultado)
                 {
                     if(empty($resultado->resultRows))
                     {
                         // Reject es básicamente un throw, permite hacer error handling.
-                        return reject(new RutaNoExiste());
+                        return reject(new HotelNoExiste());
                     }
 
                     return $resultado;
@@ -122,12 +102,12 @@ final class ModelRuta implements ModelInterface
                 ->then(
                     function(QueryResult $resultado)
                     {   
-                        $rutas = [];
+                        $hoteles = [];
                         foreach($resultado->resultRows as $linea)
                         {
-                            array_push($rutas, Ruta::Ruta($linea));
+                            array_push($hoteles, Hotel::Hotel($linea));
                         }
-                        return $rutas;
+                        return $hoteles;
                     }
                 );
     }

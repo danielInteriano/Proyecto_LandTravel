@@ -6,11 +6,14 @@ use App\Tours\Tour;
 use React\MySQL\QueryResult;
 use App\Rutas\Kernel\KernelRutas;
 use function React\Promise\reject;
+use function React\Promise\resolve;
+
 use React\EventLoop\LoopInterface;
 use React\Promise\PromiseInterface;
 use React\MySQL\ConnectionInterface;
 use App\Tours\Exceptions\TourNoExiste;
 use App\Nucleo\Interfaces\ModelInterface;
+use App\Tours\Exceptions\ErrorCreacionTours;
 
 final class ModelTours implements ModelInterface
 {
@@ -30,11 +33,7 @@ final class ModelTours implements ModelInterface
                 function (QueryResult $resultado) {
                     $tours = [];
                     foreach ($resultado->resultRows as $linea) {
-                        $idtour = $linea['idtour'];
-                        $descripcion = $linea['descripcion'];
-                        $nombre_tour = $linea['nombre_tour'];
-                        $cupo = $linea['cupo'];
-                        array_push($tours, new Tour($idtour, $descripcion, $nombre_tour, $cupo));
+                        array_push($tours, Tour::Tour($linea));
                     }
                     return $tours;
                 }
@@ -47,13 +46,16 @@ final class ModelTours implements ModelInterface
                         $tamaño = sizeof($tours);
                         $rutas_s = [];
 
-                        foreach ($rutas as $ruta) {
-                            if (!isset($rutas_s[$ruta->idtour])) {
-                                $rutas_s[$ruta->idtour] = [];
+                        foreach ($tours as $tour) {
+                            if (!isset($rutas_s[$tour->idtour])) {
+                                $rutas_s[$tour->idtour] = [];
                             }
-                            array_push($rutas_s[$ruta->idtour], $ruta->toArray());
                         }
 
+                        foreach ($rutas as $ruta) {
+                            array_push($rutas_s[$ruta->idtour], $ruta->toArray());
+                        }
+                        
                         for ($i = 0; $i < $tamaño; $i++) {
                             $tours[$llaves[$i]]->llenarRutas($rutas_s[$tours[$llaves[$i]]->idtour]);
                         }
@@ -68,16 +70,10 @@ final class ModelTours implements ModelInterface
         return $this->exists($id)
             ->then(
                 function (QueryResult $resultado) {
-                    $linea = $resultado->resultRows[0];
-                    $idtour = $linea['idtour'];
-                    $descripcion = $linea['descripcion'];
-                    $nombre_tour = $linea['nombre_tour'];
-                    $cupo = $linea['cupo'];
-
-                    return KernelRutas::kernelGetAllById($this->ciclo, $this->conexion, $idtour)
+                    $tour = Tour::Tour($resultado->resultRows[0]);
+                    return KernelRutas::kernelGetAllById($this->ciclo, $this->conexion, $tour->idtour)
                         ->then(
-                            function (array $rutas) use ($idtour, $descripcion, $nombre_tour, $cupo) {
-                                $tour = new Tour($idtour, $descripcion, $nombre_tour, $cupo);
+                            function (array $rutas) use ($tour) {
                                 $tour->llenarRutas($rutas);
                                 return $tour;
                             }
@@ -88,7 +84,23 @@ final class ModelTours implements ModelInterface
 
     public function create(array $data): PromiseInterface
     {
-        return $this->conexion->query('');
+        $this->conexion->query('SET @codigo_error = 0;');
+        $this->conexion->query('CALL landtravel.SpNuevoTour(?, ?, ?, ?, @codigo_error);', 
+        [
+            $data['idtipo_tour'],
+            $data['nombre'],
+            $data['fecha_inicio'],
+            $data['cupo']
+        ]);
+        return $this->conexion->query('SELECT @codigo_error as error;')
+            ->then(function(QueryResult $resultado){
+
+                if($resultado->resultRows[0]['error'] !== '0')
+                {
+                    return reject(new ErrorCreacionTours());
+                }
+                return resolve();
+            });
     }
 
     public function update(string $id, array $data): PromiseInterface

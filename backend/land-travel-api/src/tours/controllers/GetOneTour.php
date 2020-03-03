@@ -25,7 +25,7 @@ final class GetOneTour extends ControladorTemplate
             ->then(null,
                 function(TourNoExiste $excepcion)
                 {
-                    return RespuestaJson::INTERNAL_ERROR(['errores' => 'No se encontró al usuario']);
+                    return RespuestaJson::NOT_FOUND_DATA(['errores' => 'No se encontró el tour']);
                 }
             )
             ->then(null,

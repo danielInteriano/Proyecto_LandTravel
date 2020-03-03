@@ -16,27 +16,25 @@ final class GetOneUsuario extends ControladorTemplate
         return $this->modelo->getOne($id)
             // El codigo se ejecutó satisfactoriamente
             ->then(
-                function(Usuario $usuario)
-                {
+                function (Usuario $usuario) {
                     return RespuestaJson::OK(['usuarios' => $usuario->toArray()]);
                 }
             )
             // Se ejecutará cuando se haga un reject
-            ->then(null,
-                function(UsuarioNoExiste $excepcion)
-                {
-                    
-                    return RespuestaJson::INTERNAL_ERROR(['errores' => 'No se encontró al usuario']);
+            ->then(
+                null,
+                function (UsuarioNoExiste $excepcion) {
+                    return RespuestaJson::NOT_FOUND(['errores' => 'No se encontró al usuario']);
                 }
             )
-            ->then(null,
-                function(Exception $excepcion)
-                {
+            ->then(
+                null,
+                function (Exception $excepcion) {
                     return RespuestaJson::INTERNAL_ERROR(['errores' => $excepcion->getMessage()]);
                 }
             );
     }
-/*
+    /*
     public static function factory($conexion) : self
     {
         $modelo = new ModelUsuario($conexion);
