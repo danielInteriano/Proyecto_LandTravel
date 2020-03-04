@@ -11,7 +11,9 @@ if (isset($_GET['id'])){
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
   $result = curl_exec($ch);
+ 
   $result_php = json_decode($result, true);
+  echo var_dump($result_php);
 
 ?>
 <!DOCTYPE html>
