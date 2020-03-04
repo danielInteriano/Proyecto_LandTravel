@@ -33,7 +33,6 @@ $('#button-create').click(function(){
 		
 			if(res.creado === true){
 				console.log("Si se creo");
-				location.href = '';	
 				//$('#baba').prop('selectedIndex',0);
 				//$('input[name=checkListItem').val('');			
 			}else{

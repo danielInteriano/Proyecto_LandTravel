@@ -11,7 +11,7 @@ $('#button-1').click(function(){
 		type:"POST",
 		data: {'correo': correo },
 		datatype:'Json',
-		url:"php/lost.php",
+		url:"../php/lost.php",
 		success:function(resultado){
 			let res = JSON.parse(resultado);
 			console.log(res.message);
