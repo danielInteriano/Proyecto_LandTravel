@@ -68,6 +68,7 @@ border-width: 2px;border-color:black; opacity:0.7; border-left-style:none;border
             <th scope="col">Fecha Inicio</th>
             <th scope="col">Cupos</th>
             <th scope="col">Duracion</th>
+			<th scope="col">Acción</th>
           </tr>
         </thead>
         <tbody>
@@ -82,13 +83,17 @@ border-width: 2px;border-color:black; opacity:0.7; border-left-style:none;border
                       $result=mysqli_query($conexion,$sql);
 			                while ($mostrar=mysqli_fetch_row($result)) {
 				?>
-            <tr class="success">
-            <th scope="row"><?php echo $mostrar[1] ?></th>
-            <td><?php echo $mostrar[2] ?></td>
-            <td><?php echo $mostrar[3] ?></td>
-            <td>Dias: <?php echo $mostrar[5] ?> Noches: <?php echo $mostrar[6] ?></td>
-            <td><button href='modificar-tour.php?id=<?php echo $mostrar[0] ?>'style=";width: 100%;background-color: gray !important;" type="button" class="btn btn-success">Modificar</button>
-            </td>
+			<form method="get" action='modificar-tour.php'>
+				<tr class="success">
+				<th scope="row"><?php echo $mostrar[1] ?></th>
+				<td><?php echo $mostrar[2] ?></td>
+				<td><?php echo $mostrar[3] ?></td>
+				<td><?php echo $mostrar[4] ?></td>
+				<td>Dias: <?php echo $mostrar[5] ?> Noches: <?php echo $mostrar[6] ?></td>
+				<input name='tour' value='<?php echo $mostrar[0] ?>' hidden/>
+				<td><button style=";width: 100%;background-color: gray !important;" type="submit" class="btn btn-success">Modificar</button>
+				</td>
+			</form>
           </tr>
 				<?php 
 			}
