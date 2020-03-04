@@ -12,7 +12,7 @@ if (isset($_GET['id'])){
   $result = curl_exec($ch);
  
   $result_php = json_decode($result, true);
-  echo var_dump($result_php);
+  echo var_dump($result_php['tours']['rutas']);
 
 ?>
 <!DOCTYPE html>
