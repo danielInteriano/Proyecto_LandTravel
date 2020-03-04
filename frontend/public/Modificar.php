@@ -1,3 +1,8 @@
+<?php 
+require_once "../clases/conexion.php";
+$obj= new conectar();
+$conexion=$obj->conexion();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,17 +29,24 @@
 <header>
 <nav class="navbar fixed-top navegacion">
       <ul class="nav">
-        <li class="nav-item"><a href="#">Administracion</a></li>
-
-        <li><a href="#">Guia De Turismo</a></li>
-
-        <li> <a href="#">Destinos</a></li>
-        <li> <a href="#">Atencion Al Cliente</a></li>
+      <li class="nav-item naveup"> <a href="#">Administración</a>
+          <ul class="nave">
+            <li><a href="index.php">Cerrar Sesión</a></li>
+          </ul>
+        </li>
+        <li class="nav-item naveup"> <a href="#">Empleados</a>
+          <ul class="nave">
+            <li><a href="creacion-tours.php">Rutas Asignadas</a></li>
+            <li><a href="VisualizarContratos.php">Contratos</a></li>
+          </ul>
+        </li>
+        <li> <a href="404.php">Destinos</a></li>
+        <li> <a href="infoServiCliente.php">Atencion Al Cliente</a></li>
         <li class="nav-item naveup"> <a href="#">Tours</a>
           <ul class="nave">
             <li><a href="creacion-tours.php">Agregar</a></li>
-            <li><a href="modificar.php">Modificar</a></li>
-            <li><a href="eliminar.php">Eliminar</a></li>
+            <li><a href="Modificar.php">Modificar</a></li>
+            <li><a href="Eliminar.php">Eliminar</a></li>
           </ul>
         </li>
       </ul>
@@ -54,37 +66,36 @@ border-width: 2px;border-color:black; opacity:0.7; border-left-style:none;border
             <th scope="col">Tipo</th>
             <th scope="col">Nombre</th>
             <th scope="col">Fecha Inicio</th>
+            <th scope="col">Cupos</th>
             <th scope="col">Duracion</th>
-            <th scope="col">Accion</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="success">
-            <th scope="row">1</th>
-            <td>pareja</td>
-            <td>Destino Historico</td>
-            <td>2/10/2020</td>
-            <td>4 dias y 3 noches</td>
-            <td><button style=";width: 100%;background-color: gray !important;" type="button" class="btn btn-success">Modificar</button>
+        <?php 
+			                $sql="select tou.idtour,descripcion,nombre,fecha_inicio,cupo,sum(c_dias),sum(c_noches) from tour tou
+                      inner join tipo_tour tt on tt.idtipo_tour=tou.idtipo_tour
+                      inner join ruta rut on rut.idtour=tou.idtour
+                      where tou.HABILITADO=1
+                      group by tou.idtour,descripcion,nombre,fecha_inicio,cupo 
+                      order by descripcion asc";
+                      $conexion=$obj->conexion();
+                      $result=mysqli_query($conexion,$sql);
+			                while ($mostrar=mysqli_fetch_row($result)) {
+				?>
+            <tr class="success">
+            <th scope="row"><?php echo $mostrar[1] ?></th>
+            <td><?php echo $mostrar[2] ?></td>
+            <td><?php echo $mostrar[3] ?></td>
+            <td><?php echo $mostrar[4] ?></td>
+            <td>Dias: <?php echo $mostrar[5] ?> Noches: <?php echo $mostrar[6] ?></td>
+            <td><button onclick=Modificar(<?php echo $mostrar[0] ?>) style=";width: 100%;background-color: gray !important;" type="button" class="btn btn-success">Modificar</button>
             </td>
           </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Individual</td>
-            <td>Eco-paseo</td>
-            <td>2/10/2020</td>
-            <td>3 dias y 2 noches</td>
-            <td><button style=";width: 100%;background-color: gray !important;" type="button" class="btn btn-success">Modificar</button>
-            </td>
-          <tr>
-            <th scope="row">3</th>
-            <td>Familiar</td>
-            <td>Eco-paseo</td>
-            <td>3/10/2020</td>
-            <td>2 dias y 1 noches</td>
-            <td><button style=";width: 100%;background-color: gray !important;" type="button" class="btn btn-success">Modificar</button>
-            </td>
-          </tr>
+				<?php 
+			}
+			mysqli_close($conexion);
+			?> 
+
         </tbody>
       </table>
 <footer>

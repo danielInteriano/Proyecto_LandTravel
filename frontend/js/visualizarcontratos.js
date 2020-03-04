@@ -1,72 +1,25 @@
-//validando campos vacios
+$(document).ready(function (){
+    console.log("Carga JS!");
+});
 
 
-function obteniendoid(id){
-    const etiqueta=document.getElementById(id);
-    if(etiqueta.value==''){
-        etiqueta.classList.remove('inputvalido');
-        etiqueta.classList.add('error');
-    }
-    else{
-        etiqueta.classList.remove('error');
-        etiqueta.classList.add('inputvalido');
-    }
-}
-
-function valido(){
- obteniendoid('Identidad');
- obteniendoid('numerocontrato');
- obteniendoid('primernombre');
- obteniendoid('segundonombre');
- obteniendoid('primerapellido');
- obteniendoid('segundoapellido');
- obteniendoid('horastrabajo');
-
-}
-
-var btnguardarcambios=document.getElementById("btnguardarcambios");
-btnguardarcambios.onclick=valido;
-
-function obididentidad(id){
-    const identidad=document.getElementById(id);
-    if(identidad.value==''){
-        identidad.classList.remove('inputvalido');
-        identidad.classList.add('error');
-    }
-    else{
-        identidad.classList.remove('error');
-        identidad.classList.add('inputvalido');
-    }
-
-
-}
-
-
-function v(){
-    obididentidad('bi');
-}
-
-
-var btnbuscari=document.getElementById("btnbuscari");
-btnbuscari.onclick=v;
-
-
-$("select#create-pais").change(function() {
+$("select#inputEmpleado").change(function() {
  
     $.ajax({
         type: 'POST',
-        url: '../procesos/getCiudad-Pais.php',
-        data: {id:$("#create-pais option:selected").val()},
+        url: '../procesos/getContrato-Empleado.php',
+        data: {id:$("#inputEmpleado option:selected").val()},
         success: function(resp) {
     
                     a= JSON.parse(resp);
-                    $("#create-ciudad").html("");
-                    $("#create-ciudad").append('<option value="" disabled selected hidden>-</option>');
-                    for(var i=0; i<=a.length-1; i++) {
-                        $("#create-ciudad").append(`
-                            <option value="${a[i][0]}">${a[i][2]}</option>
-                            `);
-                    }
+                    $("#vc-identidad").val(a[0][10]);
+                    $("#vc-ncontrato").val(a[0][12]);
+                    $("#vc-pnombre").val(a[0][4]);
+                    $("#vc-snombre").val(a[0][5]);
+                    $("#vc-papellido").val(a[0][6]);
+                    $("#vc-sapellido").val(a[0][7]);
+                    $("#inputContrato").append(`<option selected hidden>${a[0][21]}</option>`)
+
       }  
     });
     });

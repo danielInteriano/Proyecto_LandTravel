@@ -16,25 +16,31 @@
     ul,
     ol {
       list-style: none;
-
     }
   </style>
   
 </head>
 <header>
-    <nav class="navbar fixed-top navegacion">
+<nav class="navbar fixed-top navegacion">
       <ul class="nav">
-        <li class="nav-item"><a href="#">Administracion</a></li>
-
-        <li><a href="#">Guia De Turismo</a></li>
-
-        <li> <a href="#">Destinos</a></li>
-        <li> <a href="#">Atencion Al Cliente</a></li>
+      <li class="nav-item naveup"> <a href="#">Administración</a>
+          <ul class="nave">
+            <li><a href="index.php">Cerrar Sesión</a></li>
+          </ul>
+        </li>
+        <li class="nav-item naveup"> <a href="#">Empleados</a>
+          <ul class="nave">
+            <li><a href="creacion-tours.php">Rutas Asignadas</a></li>
+            <li><a href="VisualizarContratos.php">Contratos</a></li>
+          </ul>
+        </li>
+        <li> <a href="404.php">Destinos</a></li>
+        <li> <a href="infoServiCliente.php">Atencion Al Cliente</a></li>
         <li class="nav-item naveup"> <a href="#">Tours</a>
           <ul class="nave">
             <li><a href="creacion-tours.php">Agregar</a></li>
-            <li><a href="">Modificar</a></li>
-            <li><a href="">Eliminar</a></li>
+            <li><a href="Modificar.php">Modificar</a></li>
+            <li><a href="Eliminar.php">Eliminar</a></li>
           </ul>
         </li>
       </ul>
