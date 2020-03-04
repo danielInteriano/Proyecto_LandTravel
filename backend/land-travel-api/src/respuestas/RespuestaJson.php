@@ -47,9 +47,9 @@ final class RespuestaJson extends Response
         return new self(202);
     }
 
-    public static function UNAUTHORIZED(): self
+    public static function UNAUTHORIZED($data): self
     {
-        return new self(401);
+        return new self(401, $data);
     }
 
     public static function INTERNAL_ERROR($data): self

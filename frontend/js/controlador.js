@@ -15,16 +15,14 @@ $('#iniciar-sesion').click(function(){
 		type:"POST",
 		data: parametros,
 		datatype:'json',
-		url:"34.94.254.221:8080/auth/login",
+		url:"../php/login.php",
 		success:function(resultado){
-			console.log(resultado);
-
-			/*if(resultado==true){
-				location.href='../PROYECTORAVELv2/Tours.html';					
+			retorno = JSON.parse(resultado);
+			if(retorno.logged){
+				location.href='Tours.php';					
 			}else{
-				console.log("no se pudo registrar");
-				alertify.error('No concuerdan los datos');
-			}*/
+				alertify.error(retorno.mensaje);
+			}
 		}
 	});
 });

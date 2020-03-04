@@ -99,7 +99,12 @@ final class ModelTours implements ModelInterface
                 {
                     return reject(new ErrorCreacionTours());
                 }
-                return resolve();
+                return $this->conexion->query('SELECT MAX(idtour) as id FROM tours')
+                    ->then(
+                        function(QueryResult $resultado){
+                            return $resultado->resultRows[0]['id'];
+                        }
+                    );
             });
     }
 
