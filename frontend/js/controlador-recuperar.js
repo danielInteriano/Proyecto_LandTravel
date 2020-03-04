@@ -13,14 +13,13 @@ $('#button-1').click(function(){
 		datatype:'Json',
 		url:"../php/lost.php",
 		success:function(resultado){
-			let res = JSON.parse(resultado);
-			console.log(res.message);
-			if(resultado==true){
+			console.log(resultado);
+			//if(resultado==true){
 				$('#div-login').css('display','none');
 				$('#div-recuperar').css('display','block');				
-			}else{
+			//}else{
 				console.log(resultado);
-			}
+			//}
 		}
 	});
 });
