@@ -14,7 +14,7 @@ $('.eliminar').click(function(){
 			let res = JSON.parse(resultado);
 		
 			if(res.hecho === true){
-				location.href = '';
+				location.reload();
 				//$('#baba').prop('selectedIndex',0);
 				//$('input[name=checkListItem').val('');			
 			}else{

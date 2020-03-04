@@ -73,6 +73,18 @@ if (isset($_GET['id'])){
           <label>Pais</label><br>
           <select id="create-pais" class="form-control">
             <option value="" disabled selected hidden>-</option>
+			<?php 
+			                $sql="select idpais,descripcion from pais order by descripcion asc;";
+                                        $conexion=$obj->conexion();
+                                        $result=mysqli_query($conexion,$sql);
+                                       
+			                while ($mostrar=mysqli_fetch_row($result)) {
+				?>
+                                        <option value="<?php echo $mostrar[0] ?>"><?php echo $mostrar[1] ?></option>
+				<?php 
+			}
+			mysqli_close($conexion);
+			?>
           </select>
         </p>
         <p>
