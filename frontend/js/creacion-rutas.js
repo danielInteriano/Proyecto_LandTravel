@@ -28,15 +28,13 @@ $('#button-create').click(function(){
 		datatype:'Json',
 		url:"../php/nuevaruta.php",
 		success:function(resultado){
-			console.log(resultado);
 			let res = JSON.parse(resultado);
-		
+			console.log(res);
 			if(res.creado === true){
-				console.log("Si se creo");
-				//$('#baba').prop('selectedIndex',0);
-				//$('input[name=checkListItem').val('');			
+				alert('Se creo exitosamente');
+				location.href = '';
 			}else{
-				alerty.error("No se creo");
+				alert("No se creo");
 			}
 		}
 	});
