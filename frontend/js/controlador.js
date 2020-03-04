@@ -8,22 +8,22 @@ $('#iniciar-sesion').click(function(){
 
 	var parametros = {
 		'usuario': $("#login-usuario").val(),
-		'contraseña': $("#login-contraseña").val(),
+		'contrasenia': $("#login-contraseña").val(),
 	};
 	console.log(parametros)
 	$.ajax({
 		type:"POST",
 		data: parametros,
 		datatype:'json',
-		url:"34.94.254.221/auth/login",
+		url:"../php/login.php",
 		success:function(resultado){
 			console.log(resultado);
-			/*if(resultado==true){
-				location.href='../PROYECTORAVELv2/Tours.html';					
+			if(resultado==true){
+				location.href='Tours.php';					
 			}else{
 				console.log("no se pudo registrar");
 				alertify.error('No concuerdan los datos');
-			}*/
+			}
 		}
 	});
 });
