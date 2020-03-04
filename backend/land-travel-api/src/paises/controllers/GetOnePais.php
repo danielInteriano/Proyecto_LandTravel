@@ -8,7 +8,7 @@ use App\Paises\Exceptions\PaisNoExiste;
 use App\Paises\Pais;
 use Psr\Http\Message\ServerRequestInterface;
 
-final class GetPais extends ControladorTemplate
+final class GetOnePais extends ControladorTemplate
 {
     public function __invoke(ServerRequestInterface $peticion)
     {

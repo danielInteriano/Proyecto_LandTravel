@@ -24,7 +24,7 @@ $('#button-create').click(function(){
 			let res = JSON.parse(resultado);
 		
 			if(res.creado === true){	
-                //location.href = `creacion-rutas.php?id=${res.idtour}`;
+                location.href = `creacion-rutas.php?id=${res.idtour}`;
 			}else{
 				alerty.error(res.mensaje);
 			}
