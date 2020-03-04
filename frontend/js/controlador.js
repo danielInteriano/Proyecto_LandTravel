@@ -15,9 +15,10 @@ $('#iniciar-sesion').click(function(){
 		type:"POST",
 		data: parametros,
 		datatype:'json',
-		url:"34.94.254.221/auth/login",
+		url:"34.94.254.221:8080/auth/login",
 		success:function(resultado){
 			console.log(resultado);
+
 			/*if(resultado==true){
 				location.href='../PROYECTORAVELv2/Tours.html';					
 			}else{

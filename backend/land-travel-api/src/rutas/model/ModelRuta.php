@@ -49,7 +49,7 @@ final class ModelRuta implements ModelInterface
             ->then(
                 function(QueryResult $resultado)
                 {
-
+                    return Ruta::Ruta($resultado->resultRows[0]);
                 }
             );
     }

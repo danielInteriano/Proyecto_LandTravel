@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Rutas\Controller;
+namespace App\Rutas\Controllers;
 
 use App\Rutas\Validador;
 use App\Rutas\Ruta;
