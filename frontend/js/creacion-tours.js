@@ -6,7 +6,7 @@ $('#button-create').click(function(){
 
 	var parametros = 
 	{
-        idtipo_tour : $("#create-dias").val(),
+        idtipo_tour : $("#tipo-tour").val(),
         nombre: $("#nombre").val(),
         fecha_inicio: $("#fecha-inicio").val(),
         cupo: $("#cupo").val(),
