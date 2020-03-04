@@ -10,10 +10,11 @@ $('#button-1').click(function(){
 	$.ajax({
 		type:"POST",
 		data: {'correo': correo },
-		datatype:'Json',
+		datatype:'json',
 		url:"../php/lost.php",
 		success:function(resultado){
 			console.log(resultado);
+
 			//if(resultado==true){
 				$('#div-login').css('display','none');
 				$('#div-recuperar').css('display','block');				
@@ -68,15 +69,15 @@ $('#button-confirmacion').click(function(){
 		datatype:'Json',
 		url:"php/lost.php",
 		success:function(resultado){
-			let res = JSON.parse(resultado);
-			console.log(res.message);
-			if(resultado==true){
+			//let res = JSON.parse(resultado);
+			console.log(resultado);
+			//if(resultado==true){
 				
 				$('#div-correcto').css('display','block');
 				$('#div-contrasenia').css('display','none');			
-			}else{
+			//}else{
 				console.log(resultado);
-			}
+			//}
 		}
 	});
 });
