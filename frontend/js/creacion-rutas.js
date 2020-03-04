@@ -2,20 +2,8 @@ $(document).ready(function (){
     console.log("Carga JS!");
 });
 
-function getUrlVars() {
-    var vars = {};
-    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-        vars[key] = value;
-    });
-    return vars;
-}
-
-function getUrlParam(parameter, defaultvalue){
-    var urlparameter = defaultvalue;
-    if(window.location.href.indexOf(parameter) > -1){
-        urlparameter = getUrlVars()[parameter];
-        }
-    return urlparameter;
+function getURLParameter(name) {
+	return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
 }
 
 $('#button-create').click(function(){
@@ -24,7 +12,7 @@ $('#button-create').click(function(){
 	{
 		c_dias : $("#create-dias").val(),
 		c_noches :  $("#create-noches").val(),
-		idtour : getUrlParam('id','0'),
+		idtour : getURLParameter('id'),
 		idlugar : $("#create-lugarturistico option:selected").val(),
 		idguia : $("#create-guiaturismo option:selected").val(),
 		precio : $("#create-precioRutas").val(),

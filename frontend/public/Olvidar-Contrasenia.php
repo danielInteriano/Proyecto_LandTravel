@@ -37,14 +37,14 @@
                 <section id="div-login">
                     <h1>¿Olvidastes tu Contraseña?</h1>
                     <p style="font-size: 18px;">Se le enviará un mensaje a su correo electrónico con el código a ingresar</p s>
-                    <form method="GET" id="form-correo">
+                    
                         <div class="row">
                             <div class="col-12">
                                 <input name="form-correo" id="recuperar-correo" type="text" placeholder="Dirección de Correo"><br>
                             </div>
                         </div>
                         <button value="Submit form" id="button-1">Enviar Correo</button>
-                    </form>
+                    
                 </section>
                 <!--Segundo Cuadro---------------------------------------------------------------------------------------------------------------------------------->
                 <section id="div-recuperar">
