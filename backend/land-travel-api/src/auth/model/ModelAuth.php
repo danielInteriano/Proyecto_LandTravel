@@ -131,17 +131,17 @@ final class ModelAuth implements ModelInterface
     {
         return $this->correoExists($correo)
             ->then(function(QueryResult $resultado) use ($correo) {
-
+                
                 if(empty($resultado->resultRows)){
                     return reject(new UsuarioNoExiste());
                 }
 
-                $this->conexion->query('SET @codigo = null');
+                $this->conexion->query('SET @codigo = 0');
                 $this->conexion->query('Call landtravel.SpNuevoCodigoRecuperacion(?, @codigo);', [$correo]);
                 return $this->conexion->query('SELECT @codigo as codigo')
                     ->then(
                         function(QueryResult $resultado){
-                            if (!empty($resultado->resultRows[0])) reject (new CodigoInvalido());
+                            if ($resultado->resultRows[0] !== '0') reject (new CodigoInvalido());
                             return $resultado->resultRows[0]['codigo'];
                         }
                     );

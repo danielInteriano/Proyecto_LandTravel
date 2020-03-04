@@ -2,6 +2,17 @@
 require_once "../clases/conexion.php";
 $obj = new conectar();
 $conexion = $obj->conexion();
+
+if (isset($_GET['id'])){
+  $id = $_GET['id'];
+  $ch = curl_init('localhost:8080/tours/'.$id);
+  curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $_POST);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+  $result = curl_exec($ch);
+  $result_php = json_decode($result, true);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -174,36 +185,27 @@ $conexion = $obj->conexion();
         <th scope="col">Pais</th>
         <th scope="col">Ciudad</th>
         <th scope="col">Hotel</th>
-        <th scope="col">Guia De Turismo</th>
         <th scope="col">Dias</th>
-
         <th scope="col">Noches</th>
+        <th scope="col">Precio</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>1</td>
-        <td>2</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-        <td>1</td>
-        <td>2</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
-        <td>@twitter</td>
-        <td>1</td>
-        <td>2</td>
-      </tr>
+      <?php
+        foreach($result['tours']['rutas'] as $ruta){
+            echo ('<tr>'.
+            '<th scope="row">'.$ruta['pais'].'</th>' .
+            '<td>'.$ruta['ciudad'].'</td>' .
+            '<td>'.$ruta['ciudad'].'</td>' .
+            '<td>'.$ruta['hotel'].'</td>' .
+            '<td>'.$ruta['c_dias'].'</td>' .
+            '<td>'.$ruta['c_noches'].'</td>' .
+            '<td>'.$ruta['precio_total'].'</td>' .
+            "</tr>");
+          }
+        }
+      ?>
+
     </tbody>
   </table>
 

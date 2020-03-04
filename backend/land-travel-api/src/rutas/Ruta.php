@@ -9,6 +9,9 @@ final class Ruta
     public $idpaquete;
     public $c_dias;
     public $c_noches;
+    public $pais;
+    public $ciudad;
+    public $hotel;
     public $co_dia;
     public $co_noche;
     public $precio;
@@ -18,7 +21,7 @@ final class Ruta
     public $lugares = [];
     public $transporte = [];
 
-    public function __construct($idruta, $idtour, $idpaquete, $c_dias, $c_noches, 
+    public function __construct($idruta, $idtour, $idpaquete, $c_dias, $c_noches, $pais, $ciudad, $hotel,
                                 $co_dia, $co_noche, $precio, $precio_hotel, $precio_total, $pos)
     {
         $this->idruta = (int) $idruta;
@@ -26,6 +29,9 @@ final class Ruta
         $this->idpaquete = (int) $idpaquete;
         $this->c_dias = (int) $c_dias;
         $this->c_noches = (int) $c_noches;
+        $this->pais = $pais;
+        $this->ciudad = $ciudad;
+        $this->hotel = $hotel;
         $this->co_dia = (float) $co_dia;
         $this->co_noche = (float) $co_noche;
         $this->precio = (float) $precio;
@@ -40,8 +46,9 @@ final class Ruta
             'id' => $this->idruta,
             'c_dias' => $this->c_dias,
             'c_noches' => $this->c_noches,
-            'co_dia' => $this->co_dia,
-            'co_noche' => $this->co_noche,
+            'pais' => $this->pais,
+            'ciudad' => $this->ciudad,
+            'hotel' => $this->hotel,
             'precio' => $this->precio,
             'precio_hotel' => $this->precio_hotel,
             'precio_total' => $this->precio_total,
@@ -53,8 +60,9 @@ final class Ruta
 
     public static function Ruta(Array $data) : self
     {
-        return new self($data['idruta'], $data['idtour'], $data['idpaquete'], 
-                        $data['c_dias'], $data['c_noches'], $data['co_dia'], 
+        return new self($data['idruta'], $data['idtour'], $data['idpaquete'],
+                        $data['c_dias'], $data['c_noches'], $data['pais'], 
+                        $data['ciudad'], $data['hotel'],$data['co_dia'], 
                         $data['co_noche'], $data['precio'],
                         $data['precio_hotel'], $data['precio_total'], $data['pos']);
     }
