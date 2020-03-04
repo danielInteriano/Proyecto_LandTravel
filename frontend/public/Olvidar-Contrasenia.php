@@ -97,7 +97,7 @@
                     <form>
                         <div class="row">
                             <div class="col-12">
-                                <button onclick="document.location.href = 'login.html'" id="button-confirmacion" type="button">Iniciar Sesión</button>
+                                <button onclick="document.location.href = 'index.php'" id="button-confirmacion" type="button">Iniciar Sesión</button>
                             </div>
                         </div>
 
