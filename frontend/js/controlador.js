@@ -8,7 +8,7 @@ $('#iniciar-sesion').click(function(){
 
 	var parametros = {
 		'usuario': $("#login-usuario").val(),
-		'contrasenia': $("#login-contraseña").val(),
+		'contraseña': $("#login-contraseña").val(),
 	};
 	console.log(parametros)
 	$.ajax({
@@ -17,12 +17,11 @@ $('#iniciar-sesion').click(function(){
 		datatype:'json',
 		url:"../php/login.php",
 		success:function(resultado){
-			console.log(resultado);
-			if(resultado==true){
+			retorno = JSON.parse(resultado);
+			if(retorno.logged){
 				location.href='Tours.php';					
 			}else{
-				console.log("no se pudo registrar");
-				alertify.error('No concuerdan los datos');
+				alertify.error(retorno.mensaje);
 			}
 		}
 	});

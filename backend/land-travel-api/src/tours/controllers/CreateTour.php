@@ -18,8 +18,8 @@ final class CreateTour extends ControladorTemplate
 
         return $this->modelo->create($data)
             ->then(
-                function() use ($data) {
-                    return RespuestaJson::CREATED(['mensaje' => 'El tour fue creado', 'idtour' => $data['idtour'],'creado' => true]);
+                function(String $id) use ($data) {
+                    return RespuestaJson::CREATED(['mensaje' => 'El tour fue creado', 'idtour' => $id,'creado' => true]);
                 }
             )->then(null,
                 function(){

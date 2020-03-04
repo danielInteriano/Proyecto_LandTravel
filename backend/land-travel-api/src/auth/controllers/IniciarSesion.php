@@ -45,7 +45,7 @@ final class IniciarSesion extends ControladorTemplate
             )->then(null,
                 function(UsuarioNoExiste $error)
                 {
-                    return RespuestaJson::UNAUTHORIZED(['error' => 'Credenciales incorrecots', 'logged' => false]);
+                    return RespuestaJson::UNAUTHORIZED(['error' => 'Credenciales incorrectos', 'logged' => false]);
                 }
             );
     }

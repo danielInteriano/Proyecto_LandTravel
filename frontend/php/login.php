@@ -1,6 +1,6 @@
 <?php
 
-$ch = curl_init('http://34.94.254.221:8080/auth/login');
+$ch = curl_init('http://localhost:8080/auth/login');
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
 curl_setopt($ch, CURLOPT_POSTFIELDS, $_POST);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
