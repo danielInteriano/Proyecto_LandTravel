@@ -29,6 +29,10 @@ final class GenerarCodigoRespaldo extends ControladorTemplate
                     return RespuestaJson::BAD_REQUEST(['error' => 'Hubo un error al momento de crear el codigo', 'creado' => false]);
                 }
             )->then(null,
+                function(){
+                    return RespuestaJson::BAD_REQUEST(['error' => 'No existe el usuario', 'creado' => false]);
+                }
+            )->then(null,
                 function(Exception $error){
                     return RespuestaJson::INTERNAL_ERROR(['error' => $error->getMessage()]);
                 }

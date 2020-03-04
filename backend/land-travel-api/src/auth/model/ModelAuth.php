@@ -130,7 +130,12 @@ final class ModelAuth implements ModelInterface
     public function generarCodigoRespaldo(string $correo)
     {
         return $this->correoExists($correo)
-            ->then(function() use ($correo) {
+            ->then(function(QueryResult $resultado) use ($correo) {
+
+                if(empty($resultado->resultRows)){
+                    return reject(new UsuarioNoExiste());
+                }
+
                 $this->conexion->query('SET @codigo = null');
                 $this->conexion->query('Call landtravel.SpNuevoCodigoRecuperacion(?, @codigo);', [$correo]);
                 return $this->conexion->query('SELECT @codigo as codigo')
