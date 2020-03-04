@@ -6,8 +6,7 @@ $conexion = $obj->conexion();
 if (isset($_GET['id'])){
   $id = $_GET['id'];
   $ch = curl_init('localhost:8080/tours/'.$id);
-  curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-  curl_setopt($ch, CURLOPT_POSTFIELDS, $_POST);
+  curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
   $result = curl_exec($ch);
