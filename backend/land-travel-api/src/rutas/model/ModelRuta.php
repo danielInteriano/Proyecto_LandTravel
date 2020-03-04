@@ -14,6 +14,7 @@ use App\Nucleo\Interfaces\ModelInterface;
 use App\Rutas\Exceptions\ErrorCreacionRutas;
 use App\Rutas\Exceptions\RutaNoExiste;
 use App\Usuarios\Excepciones\UsuarioNoExiste;
+use RuntimeException;
 
 final class ModelRuta implements ModelInterface
 {
@@ -57,15 +58,16 @@ final class ModelRuta implements ModelInterface
      function create(Array $data) : PromiseInterface
     {
         $this->conexion->query('SET @codigo_error = 0;');
-        $this->conexion->query('CALL landtravel.SpNuevaRuta(?, ?, ?, ?, ?, ?, ?, @codigo_error);', 
+        $this->conexion->query('CALL landtravel.SpNuevaRuta(?, ?, ?, ?, ?, ?, ?, ?, @codigo_error);', 
         [
             $data['idtour'],
             $data['idpaquete'],
             $data['idtransporte'],
+            $data['idlugar'],
+            $data['idguia'],
             $data['c_dias'],
             $data['c_dias'],
             $data['precio'],
-            $data['pos']
         ]);
         return $this->conexion->query('SELECT @codigo_error as error;')
             ->then(function(QueryResult $resultado){

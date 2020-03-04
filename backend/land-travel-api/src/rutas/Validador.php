@@ -28,7 +28,19 @@ final class Validador
         $idtransporte_validador = Validator::key('idtransporte',
             Validator::allOf(
                 Validator::intVal()
-            ))->setName('idtransporte'); 
+            ))->setName('idtransporte');
+
+        $idlugar_validador = Validator::key('idlugar',
+            Validator::allOf(
+                Validator::intVal(),
+                Validator::notEmpty()
+            ))->setName('idlugar');
+
+        $idguia_validador = Validator::key('idguia',
+            Validator::allOf(
+                Validator::intVal(),
+                Validator::notEmpty()
+            ))->setName('idguia');  
         
         $c_dias_validador = Validator::key('c_dias',
             Validator::allOf(
@@ -48,20 +60,15 @@ final class Validador
                 Validator::floatVal()
             ))->setName('precio'); 
 
-        $pos_validador = Validator::key('pos',
-            Validator::allOf(
-                Validator::notEmpty(),
-                Validator::intVal()
-            ))->setName('pos'); 
-
         $validator = Validator::allOf(
             $idtour_validador, 
             $idpaquete_validador, 
             $idtransporte_validador,
+            $idguia_validador,
+            $idlugar_validador,
             $c_dias_validador,
             $c_noches_validador,
-            $precio_validador,
-            $pos_validador
+            $precio_validador
         );
         $validator->assert($this->request->getParsedBody());
         
@@ -70,10 +77,11 @@ final class Validador
             'idtour' => $informacion['idtour'],
             'idpaquete' => $informacion['idpaquete'],
             'idtransporte' => $informacion['idtransporte'],
+            'idlugar' => $informacion['idlugar'],
+            'idguia' => $informacion['idguia'],
             'c_dias' => $informacion['c_dias'],
             'c_noches' => $informacion['c_noches'],
-            'precio' => $informacion['precio'],
-            'pos' => $informacion['pos'],
+            'precio' => $informacion['precio']
         ];
     }
 }

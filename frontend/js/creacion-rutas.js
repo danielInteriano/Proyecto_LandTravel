@@ -5,18 +5,19 @@ $(document).ready(function (){
 
 
 $('#button-create').click(function(){
-
+	const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+	
 	var parametros = 
 	{
 		c_dias : $("#create-dias").val(),
 		c_noches :  $("#create-noches").val(),
-		pais :$("#create-pais option:selected").val(),
-		ciudad :$("#create-ciudad option:selected").val(),
-		lugarTuristico : $("#create-lugarturistico option:selected").val(),
-		guiaturismo : $("#create-guiaturismo option:selected").val(),
-		precioruta : $("#create-precioRutas").val(),
-		transporte : $("#create-transporte option:selected").val(),
-		hotel :	$("#create-hotel option:selected").val()
+		idtour : urlParams.get('id'),
+		idlugar : $("#create-lugarturistico option:selected").val(),
+		idguia : $("#create-guiaturismo option:selected").val(),
+		precio : $("#create-precioRutas").val(),
+		idtransporte : $("#create-transporte option:selected").val(),
+		idpaquete :	$("#create-hotel option:selected").val()
 	};
 	
 	console.log(parametros);
@@ -25,13 +26,14 @@ $('#button-create').click(function(){
 		type:"POST",
 		data: parametros,
 		datatype:'Json',
-		url:"------------",
+		url:"../php/nuevaruta.php",
 		success:function(resultado){
 			console.log(resultado);
 			let res = JSON.parse(resultado);
 		
-			if(res.signed === true){
-				console.log("Si se creo");	
+			if(res.creado === true){
+				console.log("Si se creo");
+				location.href = '';	
 				//$('#baba').prop('selectedIndex',0);
 				//$('input[name=checkListItem').val('');			
 			}else{

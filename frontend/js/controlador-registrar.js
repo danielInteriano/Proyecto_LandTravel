@@ -7,37 +7,39 @@ $('#button-registrar').click(function(){
 
 	var parametros = 
 	{
-		pnombre : $("#primer-nombre").val(),
-		snombre :  $("#segundo-nombre").val(),
-		papellido : $("#primer-apellido").val(),
-		sapellido : $("#segundo-apellido").val(),
+		p_nombre : $("#primer-nombre").val(),
+		s_nombre :  $("#segundo-nombre").val(),
+		p_apellido : $("#primer-apellido").val(),
+		s_apellido : $("#segundo-apellido").val(),
 		correo : $("#registro-correo").val(),
 		identidad : $("#registro-identidad").val(),
-		confirmarContrasenia : $("#confirmar-contrasenia").val(),
-		fechaNac : $("#registro-fechaNac").val(),
+		confirmarcontraseña : $("#confirmar-contrasenia").val(),
+		f_nacimiento : $("#registro-fechaNac").val(),
 		contraseña : $("#registro-contrasenia").val(),
-		pais :	$("#registro-pais option:selected").val()
+		idpais :$("#registro-pais option:selected").val()
 	};
 	
-	console.log(parametros)
-	;
+	if(parametros.confirmarcontraseña === parametros.contraseña)
+	{
+		console.log(parametros);
 
-	$.ajax({
-		type:"POST",
-		data: parametros,
-		datatype:'Json',
-		url:"php/signup.php",
-		success:function(resultado){
-			console.log(resultado);
-			let res = JSON.parse(resultado);
-		
-			if(res.signed === true){
-				location.href='../login.php';					
-			}else{
-				alerty.error("No se pudo registrar");
+		$.ajax({
+			type:"POST",
+			data: parametros,
+			datatype:'Json',
+			url:"../php/signup.php",
+			success:function(resultado){
+				console.log(resultado);
+				let res = JSON.parse(resultado);
+			
+				if(res.creado === true){
+					location.href='index.php';					
+				}else{
+					alerty.error(res.mensaje);
+				}
 			}
-		}
-	});
+		});
+	}
 });
 
 
