@@ -38,7 +38,7 @@
             <button id="iniciar-sesion"  type="button">Login</button>
             <br>
             <br>
-            <img src="img/User_48.png" height="15" width="15">
+            <img src="../img/User_48.png" height="15" width="15">
             <span style="font-size: 15px;">¿Nuevo en Land Travel?</span> <a href="Registrar.php">Registrate.</a>
         </form>
     </section>
