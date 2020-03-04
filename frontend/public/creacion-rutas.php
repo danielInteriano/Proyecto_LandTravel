@@ -10,10 +10,8 @@ if (isset($_GET['id'])){
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
   $result = curl_exec($ch);
- 
   $result_php = json_decode($result, true);
-  echo var_dump($result_php['tours']['rutas']);
-
+  curl_close($ch);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,18 +73,6 @@ if (isset($_GET['id'])){
           <label>Pais</label><br>
           <select id="create-pais" class="form-control">
             <option value="" disabled selected hidden>-</option>
-            <?php
-            $sql = "select idpais,descripcion from pais order by descripcion asc;";
-            $conexion = $obj->conexion();
-            $result = mysqli_query($conexion, $sql);
-
-            while ($mostrar = mysqli_fetch_row($result)) {
-            ?>
-              <option value="<?php echo $mostrar[0] ?>"><?php echo $mostrar[1] ?></option>
-            <?php
-            }
-            mysqli_close($conexion);
-            ?>
           </select>
         </p>
         <p>
@@ -135,7 +121,7 @@ if (isset($_GET['id'])){
         </p>
         <p>
           <label>Precio TOTAL TOUR</label><br>
-          <input disabled id="create-precioTotal" class="form-control" type="text" placeholder="L."><br>
+          <input disabled id="create-precioTotal" class="form-control" type="text" placeholder="L." value="L.<?php echo $result_php['tours']['precio_total']?>"><br>
         </p>
 
       </div>
@@ -193,10 +179,9 @@ if (isset($_GET['id'])){
     </thead>
     <tbody>
       <?php
-        foreach($result['tours']['rutas'] as $ruta){
+        foreach($result_php['tours']['rutas'] as $ruta){
             echo ('<tr>'.
             '<th scope="row">'.$ruta['pais'].'</th>' .
-            '<td>'.$ruta['ciudad'].'</td>' .
             '<td>'.$ruta['ciudad'].'</td>' .
             '<td>'.$ruta['hotel'].'</td>' .
             '<td>'.$ruta['c_dias'].'</td>' .
@@ -215,6 +200,7 @@ if (isset($_GET['id'])){
   <script src="../js/jquery-3.4.1.min.js"></script>
   <script src="../js/bootstrap.min.js"></script>
   <script src="../js/creacion-rutas.js"></script>
+  <script src="../js/alertify.min.js"></script>
 </body>
 
 <footer>

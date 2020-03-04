@@ -175,6 +175,20 @@ final class ModelAuth implements ModelInterface
             );
     }
 
+    public function revisarCodigo(Array $data)
+    {
+        return $this->conexion->query('SELECT 1 FROM usuarios_codigos WHERE c_respaldo = ?', [$data['codigo']])
+            ->then(
+                function(QueryResult $resultado) {
+                    
+                    if (empty($resultado->resultRows)){
+                        return reject(new CodigoInvalido());
+                    }
+                    return resolve();
+                }
+            );
+    }
+
     public function refrescarSesion()
     {
 

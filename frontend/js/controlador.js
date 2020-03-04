@@ -10,6 +10,7 @@ $('#iniciar-sesion').click(function(){
 		'usuario': $("#login-usuario").val(),
 		'contraseña': $("#login-contraseña").val(),
 	};
+	
 	console.log(parametros)
 	$.ajax({
 		type:"POST",

@@ -38,6 +38,7 @@ use App\Usuarios\Controllers\GetOneUsuario;
 use FastRoute\DataGenerator\GroupCountBased;
 use App\Auth\Controllers\GenerarCodigoRespaldo;
 use App\Auth\Controllers\RestablecerContraseña;
+use App\Auth\Controllers\RevisarCodigo;
 use App\Contratos\Model\ModelContrato;
 use App\Paises\Controllers\GetPais;
 use App\Paises\Model\ModelPais;
@@ -131,6 +132,7 @@ final class ReactServer
         $this->rutas->addGroup('/auth', function () use ($modelo_auth, $jwt){
             $this->rutas->post('/registrarse', new Registrarse($modelo_auth));
             $this->rutas->post('/login', new IniciarSesion($modelo_auth, $jwt));
+            $this->rutas->post('/revisarCodigo', new RevisarCodigo($modelo_auth));
             $this->rutas->put('/codigoRespaldo', new GenerarCodigoRespaldo($modelo_auth));
             $this->rutas->put('/restablecer', new RestablecerContraseña($modelo_auth));
         });

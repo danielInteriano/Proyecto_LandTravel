@@ -71,12 +71,12 @@ final class ModelRuta implements ModelInterface
         ]);
         return $this->conexion->query('SELECT @codigo_error as error;')
             ->then(function(QueryResult $resultado){
-
+                
                 if($resultado->resultRows[0]['error'] !== '0')
                 {
                     return reject(new ErrorCreacionRutas());
                 }
-                return resolve();
+                return resolve([]);
             });
     }
 

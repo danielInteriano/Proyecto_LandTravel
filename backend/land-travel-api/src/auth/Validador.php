@@ -179,4 +179,24 @@ final class Validador
             'codigo' => $informacion['codigo']
         ];
     }
+
+    public function validarCodigo()
+    {        
+        $codigo_validador = Validator::key('codigo',
+            Validator::allOf(
+                Validator::notEmpty(),
+                Validator::stringType()
+            ))->setName('codigo');
+        
+        $validator = Validator::allOf(
+            $codigo_validador
+        );
+        $validator->assert($this->request->getParsedBody());
+
+        $informacion = $this->request->getParsedBody();
+        return [
+            'codigo' => $informacion['codigo']
+        ];
+    }
+    
 }

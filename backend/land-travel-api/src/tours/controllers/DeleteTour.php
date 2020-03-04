@@ -17,13 +17,13 @@ final class DeleteTour extends ControladorTemplate
             ->then(
                 function()
                 {
-                    return RespuestaJson::ACCEPTED(['mensaje' => 'El tour fue eliminado', 'eliminado' => true]);
+                    return RespuestaJson::ACCEPTED(['mensaje' => 'El tour fue eliminado', 'hecho' => true]);
                 }
             )
             ->then(null,
                 function(TourNoExiste $excepcion)
                 {
-                    return RespuestaJson::NOT_FOUND_DATA(['errores' => 'No se encontró el tour', 'eliminado' => false]);
+                    return RespuestaJson::NOT_FOUND_DATA(['errores' => 'No se encontró el tour', 'hecho' => false]);
                 }
             )
             ->then(null,

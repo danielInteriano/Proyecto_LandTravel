@@ -42,9 +42,9 @@ final class RespuestaJson extends Response
         return new self(201, $data);
     }
 
-    public static function ACCEPTED(): self
+    public static function ACCEPTED($data): self
     {
-        return new self(202);
+        return new self(202, $data);
     }
 
     public static function UNAUTHORIZED($data): self

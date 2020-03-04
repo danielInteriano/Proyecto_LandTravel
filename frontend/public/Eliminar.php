@@ -91,9 +91,8 @@ border-width: 2px;border-color:black; opacity:0.7; border-left-style:none;border
             <th scope="row"><?php echo $mostrar[1] ?></th>
             <td><?php echo $mostrar[2] ?></td>
             <td><?php echo $mostrar[3] ?></td>
-            <td><?php echo $mostrar[4] ?></td>
             <td>Dias: <?php echo $mostrar[5] ?> Noches: <?php echo $mostrar[6] ?></td>
-            <td><button onclick=Modificar(<?php echo $mostrar[0] ?>) style=";width: 100%;background-color: red !important;" type="button" class="btn btn-success">Eliminar</button>
+            <td><button value=<?php echo $mostrar[0]; ?> style=";width: 100%;background-color: red !important;" type="button" class="btn btn-success eliminar">Eliminar</button>
             </td>
           </tr>
 				<?php 
@@ -150,5 +149,5 @@ border-width: 2px;border-color:black; opacity:0.7; border-left-style:none;border
 
 
 </html>
-<script src="../js/tours.js"></script>
+<script src="../js/eliminar-tour.js"></script>
     </body>

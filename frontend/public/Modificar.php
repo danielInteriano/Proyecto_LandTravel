@@ -86,9 +86,8 @@ border-width: 2px;border-color:black; opacity:0.7; border-left-style:none;border
             <th scope="row"><?php echo $mostrar[1] ?></th>
             <td><?php echo $mostrar[2] ?></td>
             <td><?php echo $mostrar[3] ?></td>
-            <td><?php echo $mostrar[4] ?></td>
             <td>Dias: <?php echo $mostrar[5] ?> Noches: <?php echo $mostrar[6] ?></td>
-            <td><button onclick=Modificar(<?php echo $mostrar[0] ?>) style=";width: 100%;background-color: gray !important;" type="button" class="btn btn-success">Modificar</button>
+            <td><button href='modificar-tour.php?id=<?php echo $mostrar[0] ?>'style=";width: 100%;background-color: gray !important;" type="button" class="btn btn-success">Modificar</button>
             </td>
           </tr>
 				<?php 

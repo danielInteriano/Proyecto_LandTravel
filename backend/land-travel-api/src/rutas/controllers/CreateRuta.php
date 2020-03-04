@@ -18,10 +18,10 @@ final class CreateRuta extends ControladorTemplate
 
         return $this->modelo->create($data)
             ->then(
-                function(){
+                function(Array $mock){
                     return RespuestaJson::CREATED(['mensaje' => 'La ruta ha sido creada', 'creado' => true]);
                 }
-            )->then(null,
+            )->otherwise(
                 function(ErrorCreacionRutas $error){
                     return RespuestaJson::BAD_REQUEST(['mensaje' => 'No se pudo crear', 'creado' => false]);
                 });
