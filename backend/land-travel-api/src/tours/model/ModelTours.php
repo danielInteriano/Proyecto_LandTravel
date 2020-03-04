@@ -85,7 +85,7 @@ final class ModelTours implements ModelInterface
     public function create(array $data): PromiseInterface
     {
         $this->conexion->query('SET @codigo_error = 0;');
-        $this->conexion->query('CALL landtravel.SpNuevoTour(?, ?, ?, ?, @codigo_error);', 
+        $this->conexion->query('CALL landtravel.SpNuevoTour(null, ?, ?, ?, ?, @codigo_error);', 
         [
             $data['idtipo_tour'],
             $data['nombre'],
@@ -105,7 +105,25 @@ final class ModelTours implements ModelInterface
 
     public function update(string $id, array $data): PromiseInterface
     {
-        return $this->conexion->query('');
+        $this->conexion->query('SET @codigo_error = 0;');
+        $this->conexion->query('CALL landtravel.SpNuevoTour(?, ?, ?, ?, ?, @codigo_error);', 
+        [
+            $id,
+            $data['idtipo_tour'],
+            $data['nombre'],
+            $data['fecha_inicio'],
+            $data['cupo']
+        ]);
+
+        return $this->conexion->query('SELECT @codigo_error as error;')
+            ->then(function(QueryResult $resultado){
+
+                if($resultado->resultRows[0]['error'] != '0')
+                {
+                    return reject(new ErrorCreacionTours());
+                }
+                return resolve();
+            });
     }
 
     public function delete(string $id): PromiseInterface

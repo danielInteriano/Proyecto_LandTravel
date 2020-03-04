@@ -23,7 +23,6 @@ final class Validador
         $nombre_validador = Validator::key('nombre',
             Validator::allOf(
                 Validator::notEmpty(),
-                Validator::noWhitespace(),
                 Validator::stringType()
             ))->setName('nombre');
 
@@ -49,8 +48,8 @@ final class Validador
         
         $informacion = $this->request->getParsedBody();
         return [
-            'idtipo_tour' => $informacion['p_nombre'],
-            'nombre' => $informacion['s_nombre'],
+            'idtipo_tour' => $informacion['idtipo_tour'],
+            'nombre' => $informacion['nombre'],
             'fecha_inicio' => date('Y-m-d', strtotime($informacion['fecha_inicio'])),
             'cupo' => $informacion['cupo']
         ];

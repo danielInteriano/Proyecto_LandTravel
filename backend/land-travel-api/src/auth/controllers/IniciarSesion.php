@@ -8,6 +8,7 @@ use App\Nucleo\Interfaces\ModelInterface;
 use App\Usuarios\Usuario;
 use App\Respuestas\RespuestaJson;
 use App\Nucleo\Template\ControladorTemplate;
+use App\Usuarios\Exceptions\UsuarioNoExiste;
 use Psr\Http\Message\ServerRequestInterface;
 
 final class IniciarSesion extends ControladorTemplate
@@ -36,10 +37,16 @@ final class IniciarSesion extends ControladorTemplate
                         'exp' => time() + 60*60
                     ];
                     $token = JWT::encode($payload, $this->jwt);
-                    return RespuestaJson::OK(['token' => $token]);
+                    return RespuestaJson::OK(['token' => $token, 'logged' => true]);
                 }
 
-                return RespuestaJson::UNAUTHORIZED(['error' => 'Contraseña o correo incorrecto']);
-            });
+                return RespuestaJson::UNAUTHORIZED(['error' => 'Contraseña o correo incorrecto', 'logged' => false]);
+            }
+            )->then(null,
+                function(UsuarioNoExiste $error)
+                {
+                    return RespuestaJson::UNAUTHORIZED(['error' => 'Credenciales incorrecots', 'logged' => false]);
+                }
+            );
     }
 }

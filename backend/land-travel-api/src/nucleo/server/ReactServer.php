@@ -12,11 +12,11 @@ use App\Rutas\Model\ModelRuta;
 use FastRoute\RouteParser\Std;
 use App\Tours\Model\ModelTours;
 use App\Hoteles\Model\ModelHotel;
-use App\Rutas\Controller\GetRutas;
+use App\Rutas\Controllers\GetRutas;
 use App\Ciudades\Model\ModelCiudad;
 use App\Lugares\Model\ModelLugares;
 use App\Tours\Controllers\GetTours;
-use App\Rutas\Controller\CreateRuta;
+use App\Rutas\Controllers\CreateRuta;
 use App\Usuarios\Model\ModelUsuario;
 use App\Auth\Controllers\Registrarse;
 use App\Tours\Controllers\DeleteTour;
@@ -29,7 +29,7 @@ use App\Hoteles\Controllers\GetOneHotel;
 use App\Lugares\Controllers\GetOneLugar;
 use React\Socket\Server as ServerSocket;
 use App\Ciudades\Controllers\GetCiudades;
-use App\Rutas\Controller\GetRutasPorTour;
+use App\Rutas\Controllers\GetRutasPorTour;
 use App\Usuarios\Controllers\GetUsuarios;
 use App\Nucleo\Middleware\RevisarConexion;
 use App\Lugares\Controllers\GetLugaresById;
@@ -38,8 +38,12 @@ use App\Usuarios\Controllers\GetOneUsuario;
 use FastRoute\DataGenerator\GroupCountBased;
 use App\Auth\Controllers\GenerarCodigoRespaldo;
 use App\Auth\Controllers\RestablecerContraseña;
+use App\Contratos\Model\ModelContrato;
 use App\Paises\Controllers\GetPais;
 use App\Paises\Model\ModelPais;
+use App\Rutas\Controllers\GetOneRuta;
+use App\Tours\Controllers\CreateTour;
+use App\Tours\Controllers\UpdateTour;
 
 final class ReactServer
 {
@@ -73,6 +77,7 @@ final class ReactServer
         $modelo_ciudades = new ModelCiudad($this->conexion, $this->ciclo);
         $modelo_hoteles = new ModelHotel($this->conexion, $this->ciclo);
         $modelo_lugares = new ModelLugares($this->conexion, $this->ciclo);
+        $modelo_contratos = new ModelContrato($this->conexion, $this->ciclo);
 
         /* 
             Creacion del grupo de las rutas, aqui se meteran las rutas de los
@@ -90,16 +95,19 @@ final class ReactServer
          */
         $this->rutas->addGroup('/tours', function () use ($modelo_tours){
             $this->rutas->get('', new GetTours($modelo_tours));
-            $this->rutas->post('/crear', new CreateRuta($modelo_tours));
+            $this->rutas->post('/crear', new CreateTour($modelo_tours));
             $this->rutas->get('/{id:\d+}', new GetOneTour($modelo_tours));
+            $this->rutas->put('/{id:\d+}', new UpdateTour($modelo_tours));
             $this->rutas->delete('/{id:\d+}', new DeleteTour($modelo_tours));
         });
 
         $this->rutas->addGroup('/rutas', function () use ($modelo_rutas){
             $this->rutas->get('', new GetRutas($modelo_rutas));
+            $this->rutas->get('/{id:\d+}', new GetOneRuta($modelo_rutas));
             $this->rutas->get('/tours/{id:\d+}', new GetRutasPorTour($modelo_rutas));
             $this->rutas->post('/crear', new CreateRuta($modelo_rutas));
         });
+
 
         $this->rutas->addGroup('/pais', function () use ($modelo_pais){
             $this->rutas->get('', new GetPais($modelo_pais));
