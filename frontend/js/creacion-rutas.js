@@ -3,16 +3,21 @@ $(document).ready(function (){
 });
 
 
+function getUrlParam(parameter, defaultvalue){
+    var urlparameter = defaultvalue;
+    if(window.location.href.indexOf(parameter) > -1){
+        urlparameter = getUrlVars()[parameter];
+        }
+    return urlparameter;
+}
 
 $('#button-create').click(function(){
-	const queryString = window.location.search;
-	const urlParams = new URLSearchParams(queryString);
 	
 	var parametros = 
 	{
 		c_dias : $("#create-dias").val(),
 		c_noches :  $("#create-noches").val(),
-		idtour : urlParams.get('id'),
+		idtour : getUrlParam('id','0'),
 		idlugar : $("#create-lugarturistico option:selected").val(),
 		idguia : $("#create-guiaturismo option:selected").val(),
 		precio : $("#create-precioRutas").val(),

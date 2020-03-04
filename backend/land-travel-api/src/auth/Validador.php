@@ -159,14 +159,16 @@ final class Validador
                 Validator::stringType()
             ))->setName('nueva_contraseña');
         
-        $codigo = Validator::key('codigo',
+        $codigo_validador = Validator::key('codigo',
             Validator::allOf(
                 Validator::notEmpty(),
                 Validator::stringType()
             ))->setName('codigo');
         
         $validator = Validator::allOf(
-            $correo_validador
+            $correo_validador,
+            $contraseña_validador,
+            $codigo_validador
         );
         $validator->assert($this->request->getParsedBody());
 

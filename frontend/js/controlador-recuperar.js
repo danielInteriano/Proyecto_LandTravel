@@ -15,17 +15,17 @@ $('#button-1').click(function(){
 		success:function(resultado){
 			let res = JSON.parse(resultado);
 			console.log(res.message);
-			/*if(resultado==true){
+			if(resultado==true){
 				$('#div-login').css('display','none');
 				$('#div-recuperar').css('display','block');				
 			}else{
 				console.log(resultado);
-			}*/
+			}
 		}
 	});
 });
 
-$('#button-codigo').click(function(){
+/*$('#button-codigo').click(function(){
 
 	var parametros= 
     "recuperar-codigo="+$("#recuperar-codigo").val();
@@ -36,19 +36,19 @@ $('#button-codigo').click(function(){
 		type:"POST",
 		data: parametros,
 		datatype:'Json',
-		url:"https://documenter.getpostman.com/view/9353747/SzKSULMy?version=latest",
+		url:"",
 		success:function(resultado){
 			let res = JSON.parse(resultado);
 			console.log(res.message);
-			/*if(resultado==true){
+			if(resultado==true){
 				$('#div-contrasenia').css('display','block');
 				$('#div-recuperar').css('display','none');		
 			}else{
 				console.log(resultado);
-			}*/
+			}
 		}
 	});
-});
+});*/
 
 $("#button-escribir").click(function(){
 	$('#div-login').css('display','block');
@@ -71,13 +71,13 @@ $('#button-confirmacion').click(function(){
 		success:function(resultado){
 			let res = JSON.parse(resultado);
 			console.log(res.message);
-			/*if(resultado==true){
+			if(resultado==true){
 				
 				$('#div-correcto').css('display','block');
 				$('#div-contrasenia').css('display','none');			
 			}else{
 				console.log(resultado);
-			}*/
+			}
 		}
 	});
 });
