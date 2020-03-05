@@ -8,7 +8,7 @@ $('.eliminar').click(function(){
 	$.ajax({
 		type:"DELETE",
 		datatype:'Json',
-		url:"../php/eliminarTour.php",
+		url:"../php/eliminarTour.php?id=" + $(this).val(),
 		success:function(resultado){
 			console.log(resultado);
 			let res = JSON.parse(resultado);
