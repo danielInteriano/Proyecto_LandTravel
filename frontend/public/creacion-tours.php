@@ -25,10 +25,10 @@ $conexion = $obj->conexion();
       <li> <a href="#">Destinos</a></li>
       <li> <a href="#">Atencion Al Cliente</a></li>
       <li class="nav-item naveup"> <a href="#">Tours</a>
-        <ul class="nave">
+        <ul class="navEe">
           <li><a href="creacion-tours.php">Agregar</a></li>
-          <li><a href="modificar.php">Modificar</a></li>
-          <li><a href="eliminar.php">Eliminar</a></li>
+          <li><a href="Modificar.php">Modificar</a></li>
+          <li><a href="Eliminar.php">Eliminar</a></li>
         </ul>
       </li>
     </ul>
