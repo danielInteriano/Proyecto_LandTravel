@@ -37,8 +37,8 @@ if (isset($_GET['id'])){
       <li class="nav-item naveup"> <a href="#">Tours</a>
         <ul class="nave">
           <li><a>Agregar</a></li>
-          <li><a href="modificar.php">Modificar</a></li>
-          <li><a href="eliminar.php">Eliminar</a></li>
+          <li><a href="Modificar.php">Modificar</a></li>
+          <li><a href="Eliminar.php">Eliminar</a></li>
         </ul>
       </li>
     </ul>
