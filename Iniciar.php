@@ -7,7 +7,7 @@ use Backend\Nucleo\Server\ReactServer;
 $port = 8080;
 $env = Dotenv::createImmutable(__DIR__);
 $env->load();
-$uri = getenv('DB_USER'). ':' . getenv('DB_PASS') . '@'. getenv('DB_HOST'). '/' . getenv('DB_NAME') . 'ssl=require';
+$uri = getenv('DB_USER'). ':' . getenv('DB_PASS') . '@'. getenv('DB_HOST'). '/' . getenv('DB_NAME');
 $jwt = getenv('JWT_KEY');
 
 if (PHP_SAPI === 'cli') {
