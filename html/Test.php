@@ -11,7 +11,7 @@ final class Test
 {
 
     public function __invoke(ServerRequestInterface $peticion){
-        $loader = new FilesystemLoader('html/templates');
+        $loader = new FilesystemLoader(__DIR__.'/templates');
         $twig = new Environment($loader);
 
         return RespuestaHtml::OK($twig->render('content.html.twig'));
