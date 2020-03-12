@@ -2,23 +2,18 @@
 
 namespace Backend\Nucleo\Server;
 
-use Exception;
-use Frontend\Vistas;
-use Twig\Environment;
-use React\Http\Server;
+use Frontend\Test;
 
+use React\Http\Server;
 use Backend\Auth\Proteccion;
 use React\EventLoop\Factory;
 use FastRoute\RouteCollector;
 use FastRoute\RouteParser\Std;
 use Backend\Auth\Model\ModelAuth;
-use Twig\Loader\FilesystemLoader;
 use Backend\Rutas\Model\ModelRuta;
 use Backend\Paises\Model\ModelPais;
 use Backend\Tours\Model\ModelTours;
 use Backend\Hoteles\Model\ModelHotel;
-use Backend\Respuestas\RespuestaHtml;
-use Backend\Respuestas\RespuestaJson;
 use Backend\Ciudades\Model\ModelCiudad;
 use Backend\Lugares\Model\ModelLugares;
 use Backend\Paises\Controllers\GetPais;
@@ -51,7 +46,6 @@ use Backend\Usuarios\Controllers\DeleteUsuario;
 use Backend\Usuarios\Controllers\GetOneUsuario;
 use Backend\Auth\Controllers\GenerarCodigoRespaldo;
 use Backend\Auth\Controllers\RestablecerContraseña;
-use Frontend\Vista;
 
 final class ReactServer
 {
@@ -101,7 +95,7 @@ final class ReactServer
 
         */
         $this->rutas->addGroup('/frontend', function(){
-            $this->rutas->get('', new Vista());
+            $this->rutas->get('/test', new Test());
         });
         
         /*
