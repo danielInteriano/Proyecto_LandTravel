@@ -20,4 +20,7 @@ final class RespuestaHtml extends Response
         return new self(200, $pagina);
     }
 
+    public static function NOT_FOUND() : self {
+        return new self(404);
+    }
 }

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">  
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/mostrarpaquete.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>  
+    <title>Comprar Paquete</title>
+    <link href="https://fonts.googleapis.com/css?family=Courgette&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    
+
+</head>
+
+<body background="img/viaje.jpg">
+  <div style="background-color: rgba(0, 0, 0, 0.521); padding:2em   ;height: 100%;width: 100vw;">
+    <div style="background-color: rgba(255, 255, 255, 0.911);
+    width: 90%;
+    margin: auto;border-radius: 10px;">
+      <h1  id="titulo" style="text-align: center;">Paquetes Turisticos</h1>
+ 
+<div class="container ">
+    <div class="row">
+        <div class="col-7 col-lg-5" style="width: 18rem;">
+          <p class="card-text card-title">Bahamas</p>
+            <img src="img/vuelo.png" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+          </div>
+
+        <div class="col-5 col-lg-5"><label><b>Precio L.300</b></label><br>
+          <label><b>Información:</b> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quod esse excepturi praesentium. </label><br>
+          <label><b>Hotel:</b> XYZXYZXYZ</label><br>
+          <label><b>Transporte:</b> XYZXYZXYZ</label><br>
+          <label><b>Fecha Inicio:</b> XYZXYZXYZ</label><br>
+          <label><b>Fecha Fin:</b> XYZXYZXYZ</label><br>
+          <div  class="col-2 col-lg-4 colcomprar-off"><button onclick="ShowModal()" class="showmodal btnestilos btn btn-lg" >Comprar</button></div></div>
+        <div class="col-2 col-lg-2 colcomprar"><button onclick="ShowModal()" class="showmodal btnestilos btn btn-lg" >Comprar</button></div>
+    </div>
+    <!--------------->
+    <div class="row">
+      <div class="col-7 col-lg-5" style="width: 18rem;">
+        <p class="card-text card-title">Bahamas</p>
+          <img src="img/vuelo.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          </div>
+        </div>
+
+      <div class="col-5 col-lg-5"><label><b>Precio L.300</b></label><br>
+        <label><b>Información:</b> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quod esse excepturi praesentium. </label><br>
+        <label><b>Hotel:</b> XYZXYZXYZ</label><br>
+        <label><b>Transporte:</b> XYZXYZXYZ</label><br>
+        <label><b>Fecha Inicio:</b> XYZXYZXYZ</label><br>
+        <label><b>Fecha Fin:</b> XYZXYZXYZ</label><br>
+        <div  class="col-2 col-lg-4 colcomprar-off"><button onclick="ShowModal()" class=" btnestilos btn btn-lg" >Comprar</button></div></div>
+      <div  class="col-2 col-lg-2 colcomprar"><button onclick="ShowModal()" class=" btnestilos btn btn-lg" >Comprar</button></div>
+  </div>
+  <!------------------->
+
+    </div>
+  </div>
+  
+                </div>
+                </div>          
+
+
+
+                <div class="modal fade" tabindex="-1" role="dialog" id="modalComprar">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Iniciar sesion</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                       <label> <i class="fas fa-user"></i> Usuario</label><input onkeyup="validarVacio('comprar-usuario')" id="comprar-usuario"  class="form-control spaceform"type="text" placeholder="Ingresa usuario">
+                       <div id="Error-comprar-usuario" class="error-vacio" style="display:none">¡Información de usuario vacia!</div>
+                        <label><i class="fas fa-key"></i> Contraseña</label><input onkeyup="validarVacio('comprar-password')" id="comprar-password"  class="form-control" type="text" placeholder="Password">
+                        <div id="Error-comprar-password" class="error-vacio" style="display:none">¡Contraseña vacia!</div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-success" onclick="redirigir()">Iniciar Sesión</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+</body>
+<script src="js/mostrarpaquetes.js"></script>
+</html>

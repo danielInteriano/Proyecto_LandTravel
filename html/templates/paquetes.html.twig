@@ -1,0 +1,123 @@
+{% extends '/base/base.html.twig' %}
+
+{% block title %}Travel{% endblock %}
+
+{% block css %}
+    <link href="https://fonts.googleapis.com/css?family=Courgette&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="vendors/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="vendors/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="vendors/themify-icons/themify-icons.css">
+    <link rel="stylesheet" href="vendors/linericon/style.css">
+    <link rel="stylesheet" href="vendors/owl-carousel/owl.theme.default.min.css">
+    <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="vendors/flat-icon/font/flaticon.css">
+    <link rel="stylesheet" href="vendors/nice-select/nice-select.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/comprarpaquete.css">
+{% endblock %}
+
+
+{% block body %}
+<div id="fondonegro">
+    <div id="fondoblanco">
+        <h1 id="titulo">Comprar paquete Turistico</h1>
+        <div class="container" style="width: 90% !important;">
+            <img style="width: 260px; margin-left: 15px;" src="img/visa.png" alt="">
+            <img style="width: 80px; float: right;" src="img/secure.png" alt="">
+            <div class="row">
+
+                <div class="col-md-6 col-xl-12" style="margin-bottom: 1em;">
+                    <div class="form-row">
+                        <div class="form-group col-md-6 col-xl-6">
+                            <label>Fecha</label>
+                            <input type="date" id="fecha" class="form-control  border" style="width: 100%;">
+                            <span class="error-vacio" id="mensajeFecha" style="display:none"> ¡Ingresa Una fecha!</span>
+                        </div>
+
+                        <div class="form-group col-md-6 col-lg-6">
+                            <label>Cliente</label>
+                            <input type="text" id="nombre" disabled class="form-control">
+
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-12" style="margin-bottom: 1em;">
+                    <div class="form-row">
+                        <div class="form-group col-md-6 col-lg-6">
+                            <label>TOUR</label>
+
+                            <select disabled name="" id="tour" class="form-control  border">
+                                <option value="null">Seleccione un tour</option>
+                                <option value="1">Ida a las bahamas</option>
+                            </select>
+
+                            <span class="error-vacio" id="mensajetour" style="display: none;">¡Seleccione un
+                                tour!</span>
+                        </div>
+                        <div class="form-group col-md-6 col-lg-6">
+
+                            <label for="tipotour">Tipo Tour</label>
+
+                            <select disabled id="tipotour" class="form-control  border">
+                                <option selected value="null"> Seleccione Tipo Tours</option>
+                                <option value="1"> Cruceros</option>
+                            </select>
+                            <span class="error-vacio" id="mensajetipotour" style="display: none;">¡Seleccione un tipo de
+                                tour!</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col col-lg-12" style="margin-bottom: 1em;">
+                    <div class="form-row">
+                        <div class="form-group col-md-6 col-lg-6">
+                            <label for="formapago">Forma Pago</label>
+
+                            <select class="form-control border" id="formapago">
+                                <option selected>Efectivo</option>
+                            </select>
+                        </div>
+
+
+                        <div class="form-group col-md-6 col-lg-6">
+                            <label>TARJETA CREDITO</label>
+                            <input type="text" id="numeroTarjeta" class="form-control border">
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-6 col-md-6 col-lg-3">
+                            <label>CVV</label>
+                            <input type="text" id="cvv" class="form-control border">
+                        </div>
+                        <div class="form-group col-6 col-md-6 col-lg-3">
+                            <label>Fecha de Expiración</label>
+                            <input type="date" id="" class="form-control border">
+                        </div>
+                    </div>
+
+                    <div style="text-align: center;" class="col-md-12 col-lg-12">
+                        <button class="btn btn-lg" id="botonComprar">Comprar</button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="vendors/jquery/jquery-3.2.1.min.js"></script>
+    <script src="vendors/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="vendors/nice-select/jquery.nice-select.min.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/mail-script.js"></script>
+    <script src="js/skrollr.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/comprarpaquete.js"></script>  
+{% endblock %}

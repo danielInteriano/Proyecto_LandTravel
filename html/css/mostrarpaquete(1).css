@@ -1,0 +1,34 @@
+.btnestilos{
+    border-color: rgb(255, 87, 51)!important;
+    background-color: rgb(255, 87, 51)!important;
+    color: white!important;
+
+
+}
+
+
+#titulo{
+    margin-top: 1em!important;
+    margin-bottom: 1em !important;
+    text-align: center!important;
+   
+
+}
+img{
+    width: 50%!important;
+    text-align: center;
+    
+    
+}
+
+body{
+    background-repeat: no-repeat!important;
+    background-size: cover;
+
+
+
+}
+
+#modalcomprar{
+    background-color: rgb(255, 87, 51)!important;
+}

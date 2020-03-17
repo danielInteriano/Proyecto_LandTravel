@@ -2,8 +2,6 @@
 
 namespace Backend\Nucleo\Server;
 
-use Frontend\Test;
-
 use React\Http\Server;
 use Backend\Auth\Proteccion;
 use React\EventLoop\Factory;
@@ -14,11 +12,13 @@ use Backend\Rutas\Model\ModelRuta;
 use Backend\Paises\Model\ModelPais;
 use Backend\Tours\Model\ModelTours;
 use Backend\Hoteles\Model\ModelHotel;
+use Backend\Respuestas\RespuestaFile;
 use Backend\Ciudades\Model\ModelCiudad;
 use Backend\Lugares\Model\ModelLugares;
 use Backend\Paises\Controllers\GetPais;
 use Backend\Rutas\Controllers\GetRutas;
 use Backend\Tours\Controllers\GetTours;
+use Frontend\Vistas\Test as VistasTest;
 use Backend\Usuarios\Model\ModelUsuario;
 use React\Socket\Server as ServerSocket;
 use Backend\Auth\Controllers\Registrarse;
@@ -29,10 +29,12 @@ use Backend\Tours\Controllers\DeleteTour;
 use Backend\Tours\Controllers\GetOneTour;
 use Backend\Tours\Controllers\UpdateTour;
 use Backend\Contratos\Model\ModelContrato;
+use Backend\Nucleo\Controllers\GetRecurso;
 use Backend\Auth\Controllers\IniciarSesion;
 use Backend\Auth\Controllers\RevisarCodigo;
 use Backend\Hoteles\Controllers\GetHoteles;
 use Backend\Lugares\Controllers\GetLugares;
+use Backend\Nucleo\Controllers\GetResource;
 use Backend\Nucleo\Template\RouterTemplate;
 use Backend\Hoteles\Controllers\GetOneHotel;
 use Backend\Lugares\Controllers\GetOneLugar;
@@ -46,6 +48,9 @@ use Backend\Usuarios\Controllers\DeleteUsuario;
 use Backend\Usuarios\Controllers\GetOneUsuario;
 use Backend\Auth\Controllers\GenerarCodigoRespaldo;
 use Backend\Auth\Controllers\RestablecerContraseña;
+use Frontend\Vistas\Comprar;
+use Frontend\Vistas\Index;
+use Frontend\Vistas\Paquetes;
 
 final class ReactServer
 {
@@ -55,7 +60,7 @@ final class ReactServer
     private $rutas;
     private $ciclo;
 
-    function __construct(int $puerto, string $uri, string $jwt)
+    function __construct(int $puerto, string $uri, string $jwt , $root = "")
     {
         $this->puerto = $puerto;
         $this->ciclo = Factory::create();
@@ -93,9 +98,24 @@ final class ReactServer
 
         /*
 
+        
         */
-        $this->rutas->addGroup('/frontend', function(){
-            $this->rutas->get('/test', new Test());
+
+        
+        $this->rutas->addGroup('/html', function() use ($root) {
+
+            $this->rutas->addGroup('/', function () use ($root){
+                $this->rutas->get('', new Index());
+                $this->rutas->get('test', new VistasTest());
+                $this->rutas->get('comprar', new Comprar());
+                $this->rutas->get('paquetes', new Paquetes());
+            });
+
+            $this->rutas->addGroup('/{raiz}', function () use ($root){
+                $this->rutas->get('/{archivo}', new GetRecurso($root));
+                $this->rutas->get('/{carpeta}/{archivo}', new GetRecurso($root));
+                $this->rutas->get('/{carpeta1}/{carpeta2}/{archivo}', new GetRecurso($root));    
+            });
         });
         
         /*

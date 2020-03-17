@@ -9,6 +9,8 @@ use Backend\Respuestas\RespuestaJson;
 use FastRoute\Dispatcher\GroupCountBased;
 use Psr\Http\Message\ServerRequestInterface;
 use FastRoute\DataGenerator\GroupCountBased as DataGeneratorGroupCountBased;
+use FastRoute\Dispatcher\CharCountBased;
+use FastRoute\Dispatcher\GroupPosBased;
 
 class RouterTemplate
 {
@@ -31,6 +33,8 @@ class RouterTemplate
             Despachador; Se encarga de la enrutacion.
             Si no encuentra el metodo, manda un NOT_FOUND;
          */ 
+        
+        
         switch($info_ruta[0])
         {
             case Dispatcher::NOT_FOUND:

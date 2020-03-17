@@ -1,0 +1,26 @@
+.input-error{
+    
+}
+#titulo{
+    margin-bottom: 1em!important;
+    margin-top: 1em!important;
+    text-align: center;
+}
+
+
+.btn{
+    border-color: rgb(255, 87, 51)!important;
+    background-color: rgb(255, 87, 51)!important;
+    color: white!important;
+    text-align: center;
+    margin-left: 9em;
+
+
+
+
+}
+
+    .border{
+        border-color: rgb(255, 87, 51)!important;
+
+    }

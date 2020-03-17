@@ -4,7 +4,7 @@ require 'vendor/autoload.php';
 use Dotenv\Dotenv;
 use Backend\Nucleo\Server\ReactServer;
 
-$port = 8080;
+$port = 80;
 $env = Dotenv::createImmutable(__DIR__);
 $env->load();
 $uri = getenv('DB_USER'). ':' . getenv('DB_PASS') . '@'. getenv('DB_HOST'). '/' . getenv('DB_NAME') . '?ssl=require';
@@ -16,5 +16,5 @@ if (PHP_SAPI === 'cli') {
     }
 }
 
-$servers = new ReactServer($port, $uri, $jwt);
+$servers = new ReactServer($port, $uri, $jwt, __DIR__);
 $servers->iniciarCiclo();
